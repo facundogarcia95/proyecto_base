@@ -8,10 +8,8 @@
                         Menú
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url('usuarios')}}" onclick="event.preventDefault(); document.getElementById('usuarios-form').submit();"><i class="fa text-light fa-user"></i> Usuarios</a>
-                         <form id="usuarios-form" action="{{url('usuarios')}}" method="GET" style="display: none;">
-                         @csrf
-                         </form>
+                        <a class="nav-link" href="{{route('usuarios')}}"><i class="fa text-light fa-user"></i> Usuarios</a>
+
                     </li>
 
                 </ul>

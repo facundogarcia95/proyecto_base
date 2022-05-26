@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
         });
 
         $user = [
-            ['nombre' => 'Administrador', 'tipo_documento' => 'DNI', 'num_documento' => '12345567', 'direccion' => 'SIN CALLE', 'telefono' => '2612288191','email' => 'administrador@gmail.com', 'usuario' => 'administrador', 'password' => bcrypt('administrador'), 'estado' => 1, 'idrol' => 1]
+            ['nombre' => 'Administrador', 'tipo_documento' => 'DNI', 'num_documento' => '12345567', 'direccion' => 'SIN CALLE', 'telefono' => '2612288191','email' => 'administrador@gmail.com', 'usuario' => 'administrador', 'password' => bcrypt('administrador'), 'estado' => 1, 'idrol' => 1, 'created_at' => now()]
         ];
          DB::table('users')->insert($user);
     }

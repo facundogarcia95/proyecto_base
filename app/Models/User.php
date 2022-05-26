@@ -18,9 +18,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nombre',
+        'tipo_documento',
+        'num_documento',
+        'direccion',
+        'telefono',
         'email',
+        'usuario',
         'password',
+        'estado',
+        'idrol',
     ];
 
     /**
@@ -41,4 +48,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /*
+     | -----------------------------------
+     |   FUNCIONES DE LA CLASE
+     | -----------------------------------
+     */
+
+     private function create_user(User $user){
+
+       $response = $user->save();
+       return $response;
+
+     }
+
 }
+
+

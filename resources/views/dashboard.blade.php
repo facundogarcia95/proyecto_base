@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
     @stack('header')
 
-    <title>proyectobase</title>
+    <title>{{env('APP_ADM_TITLE')}}</title>
 
     @stack('css')
     <!-- Icons -->
