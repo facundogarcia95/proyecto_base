@@ -19,11 +19,12 @@ class CreateRolesTable extends Migration
             $table->increments('id');
             $table->string('nombre',30)->unique();
             $table->string('descripcion',100)->nullable();
+            $table->boolean('is_admin')->default(0);
             $table->boolean('estado')->default(1);
             //$table->timestamps();
         });
 
-        DB::table('roles')->insert(array('id'=>'1','nombre'=>'Administrador','descripcion'=>'Administrador'));
+        DB::table('roles')->insert(array('id'=>'1','nombre'=>'Administrador','descripcion'=>'Administrador','is_admin' => 1));
     }
 
     /**
@@ -33,6 +34,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('roles');
     }
 }

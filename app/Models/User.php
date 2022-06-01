@@ -31,6 +31,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * Relaciones del modelo
+     *
+     */
+    public function rol()
+	{
+		return $this->belongsTo(Rol::class, 'idrol');
+	}
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>

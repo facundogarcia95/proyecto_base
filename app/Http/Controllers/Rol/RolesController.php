@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Rol;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Rol;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class RolesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,14 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        /**
-         * OBTENER TODOS LOS USUARIOS QUE TIENE ROL ACTIVO Y NO ES ADMINISTRADOR
-         */
-        $usuarios = User::select('users.*')->join('roles','users.idrol','=','roles.id')
-        ->where('roles.estado','=',1)
-        ->where('roles.is_admin','=',0)
-        ->paginate(15);
-        return view('usuarios.index',['usuarios'=>$usuarios]);
+        $roles = Rol::where('is_admin','!=',1)->orderBy('nombre','asc')->paginate(15);
+        return view('roles.index',['roles'=>$roles]);
     }
 
     /**
