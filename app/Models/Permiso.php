@@ -18,8 +18,11 @@ class Permiso extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'permiso',
         'idrol',
+        'controller',
+        'action',
+        'nombre',
+        'descripcion',
         'estado'
     ];
 

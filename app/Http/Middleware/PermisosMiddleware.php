@@ -18,10 +18,10 @@ class PermisosMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $controlador_metodo = explode("@",class_basename($request->route()->getAction()["controller"]));
+        list($controller, $action) = explode("@",class_basename($request->route()->getAction()["controller"]));
         $permiso = Permiso::where('idrol','=', Auth::user()->idrol)
-        ->where('controlador','=',$controlador_metodo[0])
-        ->where('metodo','=',$controlador_metodo[1])
+        ->where('controller','=',$controller)
+        ->where('action','=',$action)
         ->where('estado','=',1)
         ->first();
 

@@ -46,10 +46,10 @@ class AuthController extends Controller
         $credentials = $request->only('usuario', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->intended('panel')
-                        ->withSuccess('You have Successfully loggedin');
+                        ->withSuccess('Inicio de sesión correctamente.');
         }
 
-        return redirect("login")->withSuccess('Oppes! You have entered invalid credentials');
+        return redirect("login")->withSuccess('Ops! Has ingresado credenciales incorrectas.');
     }
 
     /**
@@ -109,5 +109,10 @@ class AuthController extends Controller
         Auth::logout();
 
         return Redirect('login');
+    }
+
+
+    public static function getUserLogin(){
+        return Auth::user();
     }
 }

@@ -6,7 +6,7 @@
                 <div class="row">
                     <ul>
                         @foreach ($permisos as $permiso)
-                            <li>{{$permiso->controlador}} - {{$permiso->metodo}} - {{$permiso->nombre}}</li>
+                            <li>{{$permiso->controller}} - {{$permiso->action}} - {{$permiso->nombre}}</li>
                         @endforeach
                     </ul>
                 </div>

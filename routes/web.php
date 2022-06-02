@@ -21,23 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-|ROUTES WITH AUTENTICATION
-|--------------------------------------------------------------------------
-*/
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('panel', [PanelController::class, 'index'])->name('panel');
-    Route::get('dashboard', [AuthController::class, 'dashboard']);
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-    Route::group(['middleware' => ['PermisosMiddleware']], function () {
-        Route::resource('usuarios', UserController::class)->name('index','usuarios');
-        Route::resource('roles', RolesController::class)->name('index','roles');
-        Route::resource('permisos', PermisosController::class)->name('index','permisos');
-    });
-
-});
-
-/*
-|--------------------------------------------------------------------------
 |PUBLIC ROUTES
 |--------------------------------------------------------------------------
 */
@@ -48,5 +31,31 @@ Route::group([], function () {
     Route::get('registration', [AuthController::class, 'registration'])->name('register');
     Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+|ROUTES WITH AUTENTICATION
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => ['auth']], function () {
+    /**
+     * RUTAS GENERICAS PARA TODOS LOS USUARIOS CON LOGIN
+     */
+    Route::get('panel', [PanelController::class, 'index'])->name('panel');
+    Route::get('dashboard', [AuthController::class, 'dashboard']);
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+    /**
+     * RUTAS ESPECIFICAS SEGÚN ROL, LAS MISMAS SE EVALÚAN CON EL MIDDLEWARE DE PERMISOS
+     */
+    Route::group(['middleware' => ['PermisosMiddleware']], function () {
+        Route::resource('usuarios', UserController::class)->name('index','usuarios');
+        Route::resource('roles', RolesController::class)->name('index','roles');
+        Route::resource('permisos', PermisosController::class)->name('index','permisos');
+    });
+
+});
+
 
 Route::fallback(function(){ return response()->view('errors.404', [], 404); });
