@@ -3,11 +3,12 @@
 namespace App\Http\Middleware;
 
 use App\Models\Permiso;
+use App\Models\Permission;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PermisosMiddleware
+class RoutesWithPermission
 {
     /**
      * Handle an incoming request.
@@ -19,13 +20,13 @@ class PermisosMiddleware
     public function handle(Request $request, Closure $next)
     {
         list($controller, $action) = explode("@",class_basename($request->route()->getAction()["controller"]));
-        $permiso = Permiso::where('idrol','=', Auth::user()->idrol)
+        $permission = Permission::where('idrol','=', Auth::user()->idrol)
         ->where('controller','=',$controller)
         ->where('action','=',$action)
-        ->where('estado','=',1)
+        ->where('state','=',1)
         ->first();
 
-        if(!$permiso){
+        if(!$permission){
             abort(403,"Permisos insuficientes.");
         }
         return $next($request);

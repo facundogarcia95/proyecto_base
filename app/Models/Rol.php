@@ -21,7 +21,7 @@ class Rol extends Model
         'nombre',
         'descripcion',
         'is_admin',
-        'estado'
+        'state'
     ];
 
 

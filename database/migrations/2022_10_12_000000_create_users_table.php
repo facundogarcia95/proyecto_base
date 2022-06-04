@@ -16,16 +16,16 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre',100);
-            $table->enum('tipo_documento',['DNI','L.C','L.E','Pasaporte'])->nullable();
-            $table->string('num_documento',20)->nullable();
-            $table->string('direccion',70)->nullable();
-            $table->string('telefono',20)->nullable();
+            $table->string('name',100);
+            $table->enum('typy_doc',['DNI','L.C','L.E','Pasaporte'])->nullable();
+            $table->string('num_doc',20)->nullable();
+            $table->string('adress',70)->nullable();
+            $table->string('cel_number',20)->nullable();
             $table->string('email',50)->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('usuario')->unique();
+            $table->string('user')->unique();
             $table->string('password');
-            $table->boolean('estado')->default(1);
+            $table->boolean('state')->default(1);
             $table->integer('idrol')->unsigned();
             $table->foreign('idrol')->references('id')->on('roles');
             $table->rememberToken();
@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
         });
 
         $user = [
-            ['nombre' => 'Administrador', 'tipo_documento' => 'DNI', 'num_documento' => '12345567', 'direccion' => 'SIN CALLE', 'telefono' => '2612288191','email' => 'administrador@gmail.com', 'usuario' => 'administrador', 'password' => bcrypt('administrador'), 'estado' => 1, 'idrol' => 1, 'created_at' => now()]
+            ['name' => 'Administrador', 'typy_doc' => 'DNI', 'num_doc' => '12345567', 'adress' => 'SIN CALLE', 'cel_number' => '2612288191','email' => 'administrador@gmail.com', 'user' => 'administrador', 'password' => bcrypt('administrador'), 'state' => 1, 'idrol' => 1, 'created_at' => now()]
         ];
          DB::table('users')->insert($user);
     }

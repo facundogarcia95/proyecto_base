@@ -5,8 +5,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <ul>
-                        @foreach ($permisos as $permiso)
-                            <li>{{$permiso->controller}} - {{$permiso->action}} - {{$permiso->nombre}}</li>
+                        @foreach ($users as $user)
+                            <li>{{$user->email}} - {{$user->num_doc}} - {{$user->rol->name}}</li>
                         @endforeach
                     </ul>
                 </div>

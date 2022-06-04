@@ -1,11 +1,11 @@
-    
 
 
-        
+
+
         // Al abrir modal para agregar disparo change del select para cambiar los campos segun el tipo de persona
         $('.modal').on('show.bs.modal', function (event) {
             $(this).find('.modal-body .tipo_persona_id').trigger("change");
-        })  
+        })
 
 
         // Persona fisica o juridica
@@ -22,25 +22,25 @@
                 $( ".conyuge" ).slideDown();
                 $( ".persona_sexo" ).slideDown();
                 $( ".persona_fallecida" ).slideDown();
-                
+
                 // Cambio elementos requeridos
                 for (let index = 0; index < document.getElementsByName("persona_nombre").length; index++) {
-                    document.getElementsByName("persona_nombre")[index].required = true;                    
-                }                
+                    document.getElementsByName("persona_nombre")[index].required = true;
+                }
                 for (let index = 0; index < document.getElementsByName("persona_apellido").length; index++) {
-                    document.getElementsByName("persona_apellido")[index].required = true;                    
-                }                
+                    document.getElementsByName("persona_apellido")[index].required = true;
+                }
                 for (let index = 0; index < document.getElementsByName("persona_denominacion").length; index++) {
-                    document.getElementsByName("persona_denominacion")[index].required = false;                    
-                }                
+                    document.getElementsByName("persona_denominacion")[index].required = false;
+                }
                 for (let index = 0; index < document.getElementsByName("tipo_documento_id").length; index++) {
-                    document.getElementsByName("tipo_documento_id")[index].required = true;                    
-                }  
+                    document.getElementsByName("tipo_documento_id")[index].required = true;
+                }
                 for (let index = 0; index < document.getElementsByName("tipo_persona_juridica_id").length; index++) {
-                    document.getElementsByName("tipo_persona_juridica_id")[index].required = false;                    
-                }                
+                    document.getElementsByName("tipo_persona_juridica_id")[index].required = false;
+                }
                 for (let index = 0; index < document.getElementsByName("persona_nro_doc").length; index++) {
-                    document.getElementsByName("persona_nro_doc")[index].required = true;                    
+                    document.getElementsByName("persona_nro_doc")[index].required = true;
                 }
 
             }
@@ -57,35 +57,35 @@
 
                 // Cambio elementos requeridos
                 for (let index = 0; index < document.getElementsByName("persona_nombre").length; index++) {
-                    document.getElementsByName("persona_nombre")[index].required = false;                    
-                }                
+                    document.getElementsByName("persona_nombre")[index].required = false;
+                }
                 for (let index = 0; index < document.getElementsByName("persona_apellido").length; index++) {
-                    document.getElementsByName("persona_apellido")[index].required = false;                    
-                }                
+                    document.getElementsByName("persona_apellido")[index].required = false;
+                }
                 for (let index = 0; index < document.getElementsByName("persona_denominacion").length; index++) {
-                    document.getElementsByName("persona_denominacion")[index].required = true;                    
-                }                
+                    document.getElementsByName("persona_denominacion")[index].required = true;
+                }
                 for (let index = 0; index < document.getElementsByName("tipo_documento_id").length; index++) {
-                    document.getElementsByName("tipo_documento_id")[index].required = false;                    
-                }  
+                    document.getElementsByName("tipo_documento_id")[index].required = false;
+                }
                 for (let index = 0; index < document.getElementsByName("tipo_persona_juridica_id").length; index++) {
-                    document.getElementsByName("tipo_persona_juridica_id")[index].required = true;                    
-                }                
+                    document.getElementsByName("tipo_persona_juridica_id")[index].required = true;
+                }
                 for (let index = 0; index < document.getElementsByName("persona_nro_doc").length; index++) {
-                    document.getElementsByName("persona_nro_doc")[index].required = false;                    
-                }            
+                    document.getElementsByName("persona_nro_doc")[index].required = false;
+                }
             }
         });
 
-        
+
 
 
 
         // Validar CUIT en envio de formulario
         $(document).ready(function(){
-            $("#formStorePersona").on("submit", function(e){       
+            $("#formStorePersona").on("submit", function(e){
                 return ValidateCUITCUIL( $("#persona_cuit").val());
-            })  
+            })
         })
 
          // Si el CUIT ya existe
@@ -98,8 +98,8 @@
                 $(".existente-cuil").removeClass("d-block");
                 this.style.backgroundColor = "#ffffff";
             }
-        });       
-        
+        });
+
 
 // Validar CUIT
 function ValidateCUITCUIL(cuit)
@@ -113,7 +113,7 @@ function ValidateCUITCUIL(cuit)
     var mod = total % 11;
     var digito = mod == 0 ? 0 : mod == 1 ? 9 : 11 - mod;
 
-    // Si no tiene guiones y tiene mas de 11 digitos devuelvo falso 
+    // Si no tiene guiones y tiene mas de 11 digitos devuelvo falso
     if((!cuit.includes("-") && cuit.length > 11) || (cuit == "00000000000")){
         return false;
     }
@@ -126,7 +126,7 @@ function existeCUITCUIL(val){
         url: "consultarCuit",
         async: true,
         data: {cuit:val.value},
-        success: function (response) {     
+        success: function (response) {
             if(response.existe){
                 // Si ya existe agrego error
                 $(".existente-cuil").addClass("d-block");
@@ -154,7 +154,7 @@ $( "#persona_cuit" ).keyup(function(e) {
             // Agregar error
            $(".valid-cuil").addClass("d-block");
             $(".valid-cuil").removeClass("d-none");
-    
+
         }
     }else{
         // Limpiar error
@@ -183,20 +183,20 @@ $(document).ready(function () {
         $(":input[type='hidden']").val("");
      });
 
-        $('[data-mask]').inputmask()    
+        $('[data-mask]').inputmask()
 
 
 });
 
 
-         
+
     var STR_PAD_LEFT = 1;
     var STR_PAD_RIGHT = 2;
     var STR_PAD_BOTH = 3;
 
-    //Autocompleta los espacios en blanco de la nomenclatura por 0 
+    //Autocompleta los espacios en blanco de la nomenclatura por 0
     function armarNomencla(str, len, pad, dir) {
- 
+
         if (typeof(len) == "undefined") { var len = 0; }
         if (typeof(pad) == "undefined") { var pad = ' '; }
         if (typeof(dir) == "undefined") { var dir = STR_PAD_RIGHT; }
@@ -226,89 +226,3 @@ $(document).ready(function () {
     }
 
 
-    
-    switch (RUTA) {
-        case 'parcelas':
-            $("#submenu2").collapse("show");
-        break;
-        case 'padron.show':
-            $("#submenu2").collapse("show");
-        break;
-        case 'modulo_personas':
-            $("#submenu2").collapse("show");
-        break;
-        case 'modulo_union':
-            $("#submenu2").collapse("show");
-        break;
-        case 'modulo_desglose':
-            $("#submenu2").collapse("show");
-        break;
-        case 'Direccion':
-            $("#submenu2").collapse("show");
-        break;
-        case 'user':
-            $("#submenu1").collapse("show");
-        break;
-        case 'seccion':
-            $("#submenu1").collapse("show");
-        break;
-        case 'bloqueo':
-            $("#submenu1").collapse("show");
-        break;  
-        case 'tipo_de_condicion':
-            $("#submenu3").collapse("show");
-            $("#submenu4").collapse("show");
-        break;    
-        case 'tipo_de_instrumento':
-            $("#submenu3").collapse("show");
-            $("#submenu4").collapse("show");
-        break;    
-        case 'tipo_de_parcela':
-            $("#submenu3").collapse("show");
-            $("#submenu4").collapse("show");
-        break;                  
-        case 'tipo_de_profesional':
-            $("#submenu3").collapse("show");
-            $("#submenu4").collapse("show");
-        break;    
-        case 'tipo_de_servicio':
-            $("#submenu3").collapse("show");
-            $("#submenu4").collapse("show");
-        break; 
-        case 'tipo_de_documento':
-            $("#submenu3").collapse("show");
-            $("#submenu5").collapse("show");
-        break;
-        case 'tipo_de_persona_parcela':
-            $("#submenu3").collapse("show");
-            $("#submenu5").collapse("show");
-        break;
-        case 'tipo_de_mejora':
-            $("#submenu3").collapse("show");
-            $("#submenu6").collapse("show");
-        break;
-        case 'tipo_de_mejora_destino':
-            $("#submenu3").collapse("show");
-            $("#submenu6").collapse("show");
-        break;
-        case 'tipo_de_afectacion':
-            $("#submenu3").collapse("show");
-        break;
-        case 'tipo_de_estado':
-            $("#submenu7").collapse("show");
-        break;
-        case 'tipos_de_destinos':
-            $("#submenu7").collapse("show");
-        break;
-        case 'tipos_de_zonas':
-            $("#submenu7").collapse("show");
-        break;
-        case 'tipo_de_uso':
-            $("#submenu7").collapse("show");
-        break;
-        case 'tipo_de_construccion':
-            $("#submenu7").collapse("show");
-        break;
-        default:
-        break;
-}

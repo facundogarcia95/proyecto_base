@@ -8,13 +8,13 @@
                         Menú
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('usuarios')}}"><i class="fa text-light fa-user"></i> Usuarios</a>
+                        <a class="nav-link" href="{{route('users.index')}}"><i class="fa text-light fa-user"></i> Usuarios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('roles')}}"><i class="fa text-light fa-user"></i> Roles</a>
+                        <a class="nav-link" href="{{route('roles.index')}}"><i class="fa text-light fa-user"></i> Roles</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('permisos')}}"><i class="fa text-light fa-user"></i> Permisos</a>
+                        <a class="nav-link" href="{{route('permissions.index')}}"><i class="fa text-light fa-user"></i> Permisos</a>
                     </li>
                 </ul>
             </nav>

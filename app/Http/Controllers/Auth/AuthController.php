@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -39,11 +40,11 @@ class AuthController extends Controller
     public function postLogin(Request $request)
     {
         $request->validate([
-            'usuario' => 'required',
+            'user' => 'required',
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('usuario', 'password');
+        $credentials = $request->only('user', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->intended('panel')
                         ->withSuccess('Inicio de sesión correctamente.');
@@ -108,7 +109,7 @@ class AuthController extends Controller
         Session::flush();
         Auth::logout();
 
-        return Redirect('login');
+        return Redirect::home();
     }
 
 

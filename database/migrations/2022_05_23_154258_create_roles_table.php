@@ -17,14 +17,14 @@ class CreateRolesTable extends Migration
 
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre',30)->unique();
-            $table->string('descripcion',100)->nullable();
+            $table->string('name',30)->unique();
+            $table->string('description',100)->nullable();
             $table->boolean('is_admin')->default(0);
-            $table->boolean('estado')->default(1);
+            $table->boolean('state')->default(1);
             //$table->timestamps();
         });
 
-        DB::table('roles')->insert(array('id'=>'1','nombre'=>'Administrador','descripcion'=>'Administrador','is_admin' => 1));
+        DB::table('roles')->insert(array('id'=>'1','name'=>'Administrador','description'=>'Administrador','is_admin' => 1));
     }
 
     /**

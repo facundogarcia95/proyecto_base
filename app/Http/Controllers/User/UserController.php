@@ -18,11 +18,11 @@ class UserController extends Controller
         /**
          * OBTENER TODOS LOS USUARIOS QUE TIENE ROL ACTIVO Y NO ES ADMINISTRADOR
          */
-        $usuarios = User::select('users.*')->join('roles','users.idrol','=','roles.id')
-        ->where('roles.estado','=',1)
+        $users = User::select('users.*')->join('roles','users.idrol','=','roles.id')
+        ->where('roles.state','=',1)
         ->where('roles.is_admin','=',0)
         ->paginate(15);
-        return view('usuarios.index',['usuarios'=>$usuarios]);
+        return view('users.index',['users'=>$users]);
     }
 
     /**

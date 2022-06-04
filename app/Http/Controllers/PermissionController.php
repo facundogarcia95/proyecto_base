@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Permiso;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Permiso;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
-class PermisosController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,11 @@ class PermisosController extends Controller
      */
     public function index()
     {
-        $permisos = Permiso::where('estado','=',1)->orderBy('id','asc')->paginate(15);
-        return view('permisos.index',['permisos'=>$permisos]);
+        //OBTENEMOS TODAS LAS RUTAS PARA UN MIDDLEWARE
+        $obj_permiso = new Permission();
+        $routes = $obj_permiso->list_routes_in_middleware('RoutesWithPermission');
+
+        return view('permissions.index',['routes'=>$routes]);
     }
 
     /**

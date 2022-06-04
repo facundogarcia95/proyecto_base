@@ -42,11 +42,19 @@
 
         </ul>
         <ul class="nav navbar-nav ml-auto">
-
+            <li class="nav-item dropdown">
+                <a class="nav-link mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="d-md-down-none">{{__('generic.leng')}}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item @if(App::getLocale() == "en") active @endif" href="{{ url('locale/en') }}">{{ __('generic.english') }}</a>
+                    <a class="dropdown-item @if(App::getLocale() == "es") active @endif" href="{{ url('locale/es') }}">{{ __('generic.spanish') }}</a>
+                </div>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img src="{{asset('imgs/avatars/4.jpg')}}" class="img-avatar" class="img-avatar" alt="Imagen Avatar">
-                    <span class="d-md-down-none">{{Auth::user()->usuario}}</span>
+                    <span class="d-md-down-none">{{Auth::user()->user}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">
@@ -59,6 +67,7 @@
                     </form>
                 </div>
             </li>
+
         </ul>
     </header>
 

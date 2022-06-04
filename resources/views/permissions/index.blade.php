@@ -5,8 +5,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <ul>
-                        @foreach ($usuarios as $usuario)
-                            <li>{{$usuario->email}} - {{$usuario->num_documento}} - {{$usuario->rol->nombre}}</li>
+                        <li>CONTROLLER - ACTION - NAME- DESCRIPTION</li>
+
+                        @foreach ($routes as $route)
+                            <li>{{$route->controller}} - {{$route->action}} - {{$route->name}} - {{$route->description}}</li>
                         @endforeach
                     </ul>
                 </div>
