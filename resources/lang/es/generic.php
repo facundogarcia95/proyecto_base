@@ -6,4 +6,7 @@ return [
     'english' => 'Inglés',
     'menu' => 'Menú',
     'home' => 'Inicio',
+    'logout' => 'Cerrar Sesión',
+    'account' => 'Cuenta',
+
 ];

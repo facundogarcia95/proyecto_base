@@ -58,10 +58,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">
-                        <strong>Cuenta</strong>
+                        <strong>@lang('generic.account')</strong>
                     </div>
                     <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="fa fa-lock"></i> Cerrar sesión</a>
+                    <i class="fa fa-lock"></i> @lang('generic.logout')</a>
                     <form id="logout-form" action="{{url('logout')}}" method="GET" style="display: none;">
                     {{ csrf_field() }}
                     </form>
