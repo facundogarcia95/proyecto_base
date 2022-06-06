@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Sistema Ventas Laravel Vue Js- webtraining-it.com">
-    <meta name="keyword" content="Sistema ventas Laravel Vue Js, Sistema compras Laravel Vue Js">
+    <meta name="description" content="">
+    <meta name="keyword" content="">
 
 
-    <title>proyectobase</title>
+    <title>{{env('APP_TITLE')}}</title>
 
     <!-- Icons -->
     <link href="{{asset('css/librerias/font-awesome.min.css')}}" rel="stylesheet">
@@ -26,6 +26,7 @@
         background-size: cover;
     }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ str_replace('_', '-', app()->getLocale()) }}" async defer></script>
 
 </head>
 
@@ -44,6 +45,5 @@
     <script src="{{asset('js/librerias/Chart.min.js')}}"></script>
     <!-- GenesisUI main scripts -->
     <script src="{{asset('js/librerias/template.js')}}"></script>
-
 </body>
 </html>

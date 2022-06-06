@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -37,14 +37,14 @@
         </button>
         <ul class="nav navbar-nav d-md-down-none">
             <li class="nav-item px-3">
-                <a class="nav-link" href="#">Menu</a>
+                <a class="nav-link" href="#">@lang('generic.menu')</a>
             </li>
 
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="d-md-down-none">{{__('generic.leng')}}</span>
+                    <span >{{__('generic.leng')}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item @if(App::getLocale() == "en") active @endif" href="{{ url('locale/en') }}">{{ __('generic.english') }}</a>
@@ -54,7 +54,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img src="{{asset('imgs/avatars/4.jpg')}}" class="img-avatar" class="img-avatar" alt="Imagen Avatar">
-                    <span class="d-md-down-none">{{Auth::user()->user}}</span>
+                    <span>{{Auth::user()->user}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">
@@ -109,8 +109,8 @@
         <!-- /Fin del contenido principal -->
 
     </div>
-    <footer class="bg-footer">
-        <span class="ml-auto"><a href="" target="_blank"  class="font-weight-bold">proyectobase</a> &copy; 2021</span>
+    <footer class="bg-footer bg-dark">
+        <span class="ml-auto"><a href="{{ route('home') }}"  class="font-weight-bold">{{ env('APP_ADM_TITLE') }}</a> &copy; 2021</span>
     </footer>
 
     <!-- Bootstrap and necessary plugins -->

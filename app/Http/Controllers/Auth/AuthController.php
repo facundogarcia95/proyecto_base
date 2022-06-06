@@ -42,6 +42,19 @@ class AuthController extends Controller
         $request->validate([
             'user' => 'required',
             'password' => 'required',
+            'g-recaptcha-response' => function($attribute,$value,$fail){
+                $secretKey = config('services.recaptcha.secret');
+                $response = $value;
+                $userIP = $_SERVER["REMOTE_ADDR"];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+                if(!$response->success){
+                    Session::flash('g-recaptcha-response','recaptcha-failed');
+                    Session::flash('alert-class','alert-danger');
+                   $fail($attribute.' Google recaptcha failed');
+                }
+            }
         ]);
 
         $credentials = $request->only('user', 'password');
@@ -64,6 +77,19 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            'g-recaptcha-response' => function($attribute,$value,$fail){
+                $secretKey = config('services.recaptcha.secret');
+                $response = $value;
+                $userIP = $_SERVER["REMOTE_ADDR"];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+                if(!$response->success){
+                    Session::flash('g-recaptcha-response','Por Favor marcar la recaptcha');
+                    Session::flash('alert-class','alert-danger');
+                   $fail($attribute.' Google recaptcha failed');
+                }
+            }
         ]);
 
         $data = $request->all();

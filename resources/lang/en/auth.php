@@ -20,5 +20,5 @@ return [
     'placehoderUser' => 'Enter User',
     'placehoderPassword' => 'Enter Password',
     'btn-enter' => 'Submit',
-
+    'recaptcha-failed' => 'Recaptcha Failed'
 ];

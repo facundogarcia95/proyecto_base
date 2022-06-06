@@ -8,6 +8,6 @@ class PanelController extends Controller
 {
     //function to call view panel->home
     public function index(){
-        return view('panel.home');
+        return view('panel.index');
     }
 }

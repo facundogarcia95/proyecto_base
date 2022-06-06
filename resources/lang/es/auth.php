@@ -20,5 +20,6 @@ return [
     'placehoderUser' => 'Ingrese Usuario',
     'placehoderPassword' => 'Ingrese Contraseña',
     'btn-enter' => 'Ingresar',
+    'recaptcha-failed' => 'Fallo en el Recaptcha'
 
 ];

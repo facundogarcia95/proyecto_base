@@ -1,5 +1,11 @@
 
 
+ .bg-footer{
+    padding: 2px;
+    text-align: center;
+    color: white;
+}
+
 section::after {
     content: "";
     display: table;
@@ -7,7 +13,7 @@ section::after {
 }
 
 /*===============================
-ALTURAS VISTA 
+ALTURAS VISTA
 ================================*/
 .vh-95{
     height: 95vh;
@@ -85,12 +91,12 @@ FONT SIZE
 
 li.bg-proyectobase_p1 {
     background-color: #cf4e59 !important;
-   
+
 }
 
 li.bg-proyectobase_p1 a{
     margin-left: 10px;
-   
+
 }
 
 li.bg-proyectobase_p2 {
@@ -99,7 +105,7 @@ li.bg-proyectobase_p2 {
 
 li.bg-proyectobase_p2 a{
     margin-left: 20px;
-   
+
 }
 
 
@@ -141,7 +147,7 @@ li.bg-proyectobase_p2 a{
 VENTANAS MODALES LATERALES
 ==================================*/
 
-.modal .modal-dialog-aside{ 
+.modal .modal-dialog-aside{
 	width: 400px; max-width:100%; height: 100%; margin:0;transform: translate(0); transition: transform .2s;
 }
 .modal .modal-dialog-aside .modal-content{  height: inherit; border:0; border-radius: 0;}
@@ -158,7 +164,7 @@ VENTANAS MODALES LATERALES
 
 
 .bg-noticias{
-    background: linear-gradient( #ffffff, #e9e8e8); 
+    background: linear-gradient( #ffffff, #e9e8e8);
 }
 .dataTables_filter{
     display: none;
@@ -188,19 +194,19 @@ animation-iteration-count: infinite;
 -webkit-animation-iteration-count: infinite;
 }
 
-@-moz-keyframes parpadeo{  
+@-moz-keyframes parpadeo{
 0% { opacity: 1.0; }
 50% { opacity: 0.0; }
 100% { opacity: 1.0; }
 }
 
-@-webkit-keyframes parpadeo {  
+@-webkit-keyframes parpadeo {
 0% { opacity: 1.0; }
 50% { opacity: 0.0; }
 100% { opacity: 1.0; }
 }
 
-@keyframes parpadeo {  
+@keyframes parpadeo {
 0% { opacity: 1.0; }
 50% { opacity: 0.0; }
 100% { opacity: 1.0; }

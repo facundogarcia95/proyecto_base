@@ -2,19 +2,19 @@
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('home')}}"><i class="fa text-light fa-bar-chart"></i> Home</a>
+                        <a class="nav-link" href="{{route('home')}}"><i class="fa text-light fa-bar-chart"></i> @lang('generic.home')</a>
                     </li>
                     <li class="nav-title">
-                        Menú
+                        @lang('generic.menu')
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('users.index')}}"><i class="fa text-light fa-user"></i> Usuarios</a>
+                        <a class="nav-link" href="{{route('users.index')}}"><i class="fa text-light fa-user"></i> @lang('menu.users')</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('roles.index')}}"><i class="fa text-light fa-user"></i> Roles</a>
+                        <a class="nav-link" href="{{route('roles.index')}}"><i class="fa text-light fa-user"></i> @lang('menu.roles')</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('permissions.index')}}"><i class="fa text-light fa-user"></i> Permisos</a>
+                        <a class="nav-link" href="{{route('permissions.index')}}"><i class="fa text-light fa-user"></i> @lang('menu.permissions')</a>
                     </li>
                 </ul>
             </nav>

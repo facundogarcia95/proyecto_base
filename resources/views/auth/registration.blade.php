@@ -43,6 +43,13 @@
 
                           <div class="form-group row">
                               <div class="col-md-6 offset-md-4">
+                                <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
+                                @if (Session::has('g-recaptcha-response'))
+                                    <p class="alert {{ Session::get('alert-class','alert-info') }}">
+                                        {{ Session::get('g-recaptcha-response') }}
+                                    </p>
+                                @endif
+                                <br/>
                                   <div class="checkbox">
                                       <label>
                                           <input type="checkbox" name="remember"> Remember Me

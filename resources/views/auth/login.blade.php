@@ -26,7 +26,7 @@
 
               <div class="form-group mb-3{{$errors->has('user' ? 'is-invalid' : '')}}">
                 <span class="input-group-addon"><i class="icon-user"></i></span>
-                <input type="text" value="{{old('user')}}" name="user" id="user" class="form-control" placeholder="{{__('auth.placehoderPassword')}}">
+                <input type="text" value="{{old('user')}}" name="user" id="user" class="form-control" placeholder="{{__('auth.placehoderUser')}}">
                 {!!$errors->first('user','<span class="invalid-feedback">:message</span>')!!}
               </div>
               <div class="form-group mb-4{{$errors->has('password' ? 'is-invalid' : '')}}">
@@ -35,14 +35,20 @@
                 {!!$errors->first('password','<span class="invalid-feedback">:message</span>')!!}
               </div>
               <div class="row">
-                <div class="col-6">
+                <div class="col-12">
+                    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
+                    @if (Session::has('g-recaptcha-response'))
+                        <p class="alert {{ Session::get('alert-class','alert-info') }}">
+                            @lang('auth.'.Session::get('g-recaptcha-response'))
+                        </p>
+                    @endif
+                    <br/>
+                </div>
+                <div class="col-12">
                   <button type="submit" class="btn bg-proyectobase text-light px-4 rounded"><i class="fa fa-sign-in fa-2x"></i> {{__('auth.btn-enter')}}</button>
                 </div>
               </div>
             </div>
-            <footer style="text-align: center">
-              <span class="ml-auto"><a href="https://facundogarcia95.io" target="_blank">FGH Soluciones</a> &copy; 2022</span>
-            </footer>
           </form>
           </div>
         </div>
