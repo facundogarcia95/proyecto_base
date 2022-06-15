@@ -23,7 +23,7 @@ class RoutesWithPermission
         $permission = Permission::where('idrol','=', Auth::user()->idrol)
         ->where('controller','=',$controller)
         ->where('action','=',$action)
-        ->where('state','=',1)
+        ->where('condition','=',1)
         ->first();
 
         if(!$permission){

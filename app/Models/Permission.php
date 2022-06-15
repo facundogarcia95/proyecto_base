@@ -25,7 +25,7 @@ class Permission extends Model
         'action',
         'name',
         'description',
-        'state'
+        'condition'
     ];
 
 
@@ -46,7 +46,7 @@ class Permission extends Model
      public function list_routes_in_middleware($middleware = ''){
         $all_routes = Route::getRoutes();
         $routes = collect();
-        $permissions = Permission::where('state','=',1)->where('idrol','=',Auth::user()->idrol)->get();
+        $permissions = Permission::where('condition','=',1)->where('idrol','=',Auth::user()->idrol)->get();
         foreach ($all_routes as $item) {
             if(in_array($middleware,$item->getAction()["middleware"])){
                 list($controller, $action) = explode("@",class_basename($item->getAction()["controller"]));

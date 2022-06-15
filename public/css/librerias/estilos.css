@@ -52,6 +52,15 @@ FONT SIZE
     font-size: 20px;
 }
 
+
+.tooltip{
+    background-color: black;
+    border-radius: 3px;
+    color: white;
+    font-size: small;
+    padding: 5px;
+    margin: 5px;
+}
 /*==============================
     ESTILOS GENERALES PARA TODAS LAS VISTAS
 ============================== */

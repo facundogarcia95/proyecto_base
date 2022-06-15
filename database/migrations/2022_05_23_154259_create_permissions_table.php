@@ -23,7 +23,7 @@ class CreatePermissionsTable extends Migration
             $table->string('action',100)->nullable(false);
             $table->string('name',100)->nullable();
             $table->text('description')->nullable();
-            $table->boolean('state')->default(1);
+            $table->enum('condition',['Active','Inactive'])->default('Active');
         });
 
         DB::table('permissions')->insert([

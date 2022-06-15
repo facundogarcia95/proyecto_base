@@ -20,7 +20,7 @@ class CreateRolesTable extends Migration
             $table->string('name',30)->unique();
             $table->string('description',100)->nullable();
             $table->boolean('is_admin')->default(0);
-            $table->boolean('state')->default(1);
+            $table->enum('condition',['Active','Inactive'])->default('Active');
             //$table->timestamps();
         });
 

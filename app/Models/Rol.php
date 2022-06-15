@@ -18,10 +18,10 @@ class Rol extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'nombre',
-        'descripcion',
+        'name',
+        'description',
         'is_admin',
-        'state'
+        'condition'
     ];
 
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -19,14 +20,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'type_duc',
+        'type_doc',
         'num_doc',
         'adress',
         'cel_number',
         'email',
         'user',
         'password',
-        'state',
+        'condition',
         'idrol',
     ];
 
@@ -63,14 +64,28 @@ class User extends Authenticatable
      | -----------------------------------
      |   FUNCIONES DE LA CLASE
      | -----------------------------------
-     */
+    */
 
-     private function create_user(User $user){
+    public function create_user(User $user){
+        $response = $user->save();
+        return $response;
+    }
 
-       $response = $user->save();
-       return $response;
-
-     }
+    public static function listUsers(Request $request){
+        if(!empty($request->searchText)){
+            $users = User::select('users.*')->join('roles','users.idrol','=','roles.id')
+            ->where('roles.condition','=',1)
+            ->where('users.name','like','%'.$request->searchText.'%')
+            ->orWhere('user','like','%'.$request->searchText.'%')
+            ->orWhere('email','like','%'.$request->searchText.'%')
+            ->paginate(10);
+        }else{
+            $users = User::select('users.*')->join('roles','users.idrol','=','roles.id')
+            ->where('roles.condition','=',1)
+            ->paginate(10);
+        }
+        return $users;
+    }
 
 }
 

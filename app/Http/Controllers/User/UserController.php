@@ -13,15 +13,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         /**
          * OBTENER TODOS LOS USUARIOS QUE TIENE ROL ACTIVO Y NO ES ADMINISTRADOR
          */
-        $users = User::select('users.*')->join('roles','users.idrol','=','roles.id')
-        ->where('roles.state','=',1)
-        ->where('roles.is_admin','=',0)
-        ->paginate(15);
+        $users = User::listUsers($request);
         return view('users.index',['users'=>$users]);
     }
 
