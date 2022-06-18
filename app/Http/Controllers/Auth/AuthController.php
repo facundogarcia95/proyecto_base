@@ -85,7 +85,7 @@ class AuthController extends Controller
                 $response = \file_get_contents($url);
                 $response = json_decode($response);
                 if(!$response->success){
-                    Session::flash('g-recaptcha-response','Por Favor marcar la recaptcha');
+                    Session::flash('g-recaptcha-response','Check recaptcha');
                     Session::flash('alert-class','alert-danger');
                    $fail($attribute.' Google recaptcha failed');
                 }
@@ -95,7 +95,7 @@ class AuthController extends Controller
         $data = $request->all();
         $check = $this->create($data);
 
-        return redirect("dashboard")->withSuccess('Great! You have Successfully loggedin');
+        return redirect("dashboard");
     }
 
     /**

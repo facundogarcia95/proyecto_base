@@ -28,5 +28,7 @@ return [
     'messege_confirm' => 'Are you sure you want to perform this action?',
     'edit' => 'Edit',
     'total_records' => 'Total Records',
-
+    'change_status' => 'Change Status',
+    'edit_success' => 'Record Modified Successfully',
+    'add_success' => 'Record added successfully',
 ];

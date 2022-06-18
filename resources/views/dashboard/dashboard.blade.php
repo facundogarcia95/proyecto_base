@@ -42,15 +42,17 @@
 
         </ul>
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span >{{__('generic.leng')}}</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item @if(App::getLocale() == "en") active @endif" href="{{ url('locale/en') }}">{{ __('generic.english') }}</a>
-                    <a class="dropdown-item @if(App::getLocale() == "es") active @endif" href="{{ url('locale/es') }}">{{ __('generic.spanish') }}</a>
-                </div>
-            </li>
+            @if(env('APP_MULTILANGUAGE'))
+                <li class="nav-item dropdown">
+                    <a class="nav-link mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span >{{__('generic.leng')}}</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item @if(App::getLocale() == "en") active @endif" href="{{ url('locale/en') }}">{{ __('generic.english') }}</a>
+                        <a class="dropdown-item @if(App::getLocale() == "es") active @endif" href="{{ url('locale/es') }}">{{ __('generic.spanish') }}</a>
+                    </div>
+                </li>
+            @endif
             <li class="nav-item dropdown">
                 <a class="nav-link mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img src="{{asset('imgs/avatars/4.jpg')}}" class="img-avatar" class="img-avatar" alt="Imagen Avatar">
@@ -78,28 +80,6 @@
                 @include('navbar.sidebaradministrador')
             @endif
 
-        @endif
-
-        @if ($errors->any())
-                <script>
-                        var text = "";
-                    @foreach ($errors->all() as $error)
-                        text = text + "<li>"+ {{ $error }} + "</li> <br/>"
-                    @endforeach
-
-                        Swal.fire({
-                        type: 'error',
-                        //title: 'Oops...',
-                        html: text,
-
-                        })
-
-                </script>
-            <div class="alert alert-danger">
-                <ul>
-
-                </ul>
-            </div>
         @endif
         <!-- Contenido Principal -->
         <main class="main">

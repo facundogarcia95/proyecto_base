@@ -27,7 +27,7 @@ class RoutesWithPermission
         ->first();
 
         if(!$permission){
-            abort(403,"Permisos insuficientes.");
+            abort(403,"Permisos insuficientes para ".$action);
         }
         return $next($request);
     }

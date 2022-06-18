@@ -25,8 +25,11 @@ return [
     'accept' => 'Aceptar',
     'cancel' => 'Cancelar',
     'list' => 'Listado',
-    'messege_confirm' => 'Está seguro que desea realizar esta acción?',
+    'messege_confirm' => '¿Está seguro que desea realizar esta acción?',
     'edit' => 'Editar',
     'total_records' => 'Total de Registros',
+    'change_status' => 'Cambiar Estado',
+    'edit_success' => 'Registro modificado exitosamente',
+    'add_success' => 'Registro agregado exitosamente',
 
 ];

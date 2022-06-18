@@ -16,7 +16,6 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -26,13 +25,25 @@ class User extends Authenticatable
         'cel_number',
         'email',
         'user',
-        'password',
-        'condition',
         'idrol',
     ];
 
+     /**
+     * The attributes that are not mass assignable.
+     *
+     */
+    protected $guarded = [
+        'id',
+        'condition',
+        'remember_token',
+        'created_at',
+        'updated_at',
+        'password',
+        'email_verified_at'
+    ];
+
     /**
-     * Relaciones del modelo
+     * Relashion for model
      *
      */
     public function rol()
@@ -71,18 +82,16 @@ class User extends Authenticatable
         return $response;
     }
 
-    public static function listUsers(Request $request){
-        if(!empty($request->searchText)){
+    public static function listUsers(Request $request = null){
+        if(!empty($request) && isset($request->searchText)){
             $users = User::select('users.*')->join('roles','users.idrol','=','roles.id')
             ->where('roles.condition','=',1)
             ->where('users.name','like','%'.$request->searchText.'%')
             ->orWhere('user','like','%'.$request->searchText.'%')
-            ->orWhere('email','like','%'.$request->searchText.'%')
-            ->paginate(10);
+            ->orWhere('email','like','%'.$request->searchText.'%');
         }else{
             $users = User::select('users.*')->join('roles','users.idrol','=','roles.id')
-            ->where('roles.condition','=',1)
-            ->paginate(10);
+            ->where('roles.condition','=',1);
         }
         return $users;
     }

@@ -1,18 +1,22 @@
 @extends('auth.contenido')
 @section('contenido')
-<div class="row">
-    <div class="col-12">
-        <div class="dropdown pull-right">
-            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ __('generic.leng')}}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item @if(App::getLocale() == "en") active @endif" href="{{ url('locale/en') }}">{{ __('generic.english') }}</a>
-                <a class="dropdown-item @if(App::getLocale() == "es") active @endif" href="{{ url('locale/es') }}">{{ __('generic.spanish') }}</a>
+
+@if(env('APP_MULTILANGUAGE'))
+    <div class="row">
+        <div class="col-12">
+            <div class="dropdown pull-right">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ __('generic.leng')}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item @if(App::getLocale() == "en") active @endif" href="{{ url('locale/en') }}">{{ __('generic.english') }}</a>
+                    <a class="dropdown-item @if(App::getLocale() == "es") active @endif" href="{{ url('locale/es') }}">{{ __('generic.spanish') }}</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endif
+
 <div class="row justify-content-center">
       <div class="col-md-5">
         <div class="card-group mb-0">

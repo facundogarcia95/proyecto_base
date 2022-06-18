@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Rol extends Model
 {
@@ -38,5 +39,16 @@ class Rol extends Model
 
      }
 
+
+     public static function listRoles(Request $request = null){
+        if(!empty($request) && isset($request->searchText)){
+            $roles = Rol::where('condition','=','Active')
+            ->where('name','like','%'.$request->searchText.'%')
+            ->orWhere('description','like','%'.$request->searchText.'%');
+        }else{
+            $roles = Rol::where('roles.condition','=','Active');
+        }
+        return $roles;
+    }
 
 }
