@@ -31,4 +31,5 @@ return [
     'change_status' => 'Change Status',
     'edit_success' => 'Record Modified Successfully',
     'add_success' => 'Record added successfully',
+    'errors_tittle' => 'Errors',
 ];

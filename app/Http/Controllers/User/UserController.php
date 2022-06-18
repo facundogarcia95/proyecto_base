@@ -76,7 +76,7 @@ class UserController extends Controller
             'type_doc' => [function($attribute,$value,$fail){
                 $types_doc = $this::getPossibleEnumValues(app(User::class)->getTable(),'type_doc');
                 if(!in_array($value,$types_doc)){
-                    $fail('validation.exits');
+                    $fail('validation.not_in');
                 }
             }],
             'num_doc' => 'max:20',

@@ -31,5 +31,6 @@ return [
     'change_status' => 'Cambiar Estado',
     'edit_success' => 'Registro modificado exitosamente',
     'add_success' => 'Registro agregado exitosamente',
+    'errors_tittle' => 'Errores',
 
 ];
