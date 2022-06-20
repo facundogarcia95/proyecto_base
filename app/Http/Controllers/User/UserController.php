@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NotifyMailPass;
 use App\Models\Rol;
 use App\Models\User;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
@@ -34,7 +39,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return false;
     }
 
     /**
@@ -45,7 +50,37 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+            $request->validate([
+                'name' => 'required|max:100',
+                'user' => 'required|max:255|unique:users,user',
+                'email' => 'required|email|unique:users,email',
+                'type_doc' => [function($attribute,$value,$fail){
+                    $types_doc = $this::getPossibleEnumValues(app(User::class)->getTable(),'type_doc');
+                    if(!in_array($value,$types_doc)){
+                        $fail('validation.not_in');
+                    }
+                }],
+                'num_doc' => 'max:20|unique:users,num_doc',
+                'adress' => 'max:70',
+                'cel_number' => 'max:20',
+            ]);
+
+            //REMOVE UNUSED PARAMETERS
+            $request->request->remove('_token');
+            $request->request->remove('id');
+
+            //ADD RAMDOM PASSWORD
+            $pass = random_int(1000,9999);
+            $random_password = Hash::make($pass);
+            $request->request->add(['password'=>$random_password]);
+
+            //ADD USER AND SEND INITIAL PASSWORD
+            User::insert($request->all());
+
+            //THE FOLLOWING COMMAND SHOULD BE RUN "php artisan queue:work"
+            Mail::to($request->email)->send(new NotifyMailPass($pass));
+
+            return Redirect::back()->with('success', 'generic.add_success');
     }
 
     /**
@@ -56,7 +91,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return false;
     }
 
 
@@ -69,25 +104,36 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'id' => 'required|integer|exists:users,id',
-            'name' => 'required|max:100',
-            'email' => 'required|email|unique:users,email,'.$request->id,',id',
-            'type_doc' => [function($attribute,$value,$fail){
-                $types_doc = $this::getPossibleEnumValues(app(User::class)->getTable(),'type_doc');
-                if(!in_array($value,$types_doc)){
-                    $fail('validation.not_in');
-                }
-            }],
-            'num_doc' => 'max:20',
-            'adress' => 'max:70',
-            'cel_number' => 'max:20',
-        ]);
+        try {
 
-        $user = User::findOrFail($request->id);
-        $user->update($request->all());
+            $request->validate([
+                'id' =>  [function($attribute,$value,$fail){
+                    $notExist = User::where($attribute,Crypt::decryptString($value))->doesntExist();
+                    if($notExist){
+                        $fail('validation.not_in');
+                    }
+                }],
+                'name' => 'required|max:100',
+                'user' => 'required|max:255|unique:users,user,'.Crypt::decryptString($request->id).',id',
+                'email' => 'required|email|unique:users,email,'.Crypt::decryptString($request->id).',id',
+                'type_doc' => [function($attribute,$value,$fail){
+                    $types_doc = $this::getPossibleEnumValues(app(User::class)->getTable(),'type_doc');
+                    if(!in_array($value,$types_doc)){
+                        $fail('validation.not_in');
+                    }
+                }],
+                'num_doc' => 'max:20|unique:users,num_doc,'.Crypt::decryptString($request->id).',id',
+                'adress' => 'max:70',
+                'cel_number' => 'max:20',
+            ]);
+            $user = User::findOrFail(Crypt::decryptString($request->id));
+            $user->update($request->all());
+            return Redirect::back()->with('success', 'generic.edit_success');
 
-        return Redirect::back()->with('success', 'generic.edit_success');
+        } catch (DecryptException $th) {
+            return Redirect::back()->with('warning', 'generic.edit_error');
+        }
+
     }
 
     /**
@@ -98,6 +144,24 @@ class UserController extends Controller
      */
     public function destroy(Request $request,$id)
     {
-        dd($request->all());
+        try {
+
+            $request->validate([
+                'id' =>  [function($attribute,$value,$fail){
+                    $notExist = User::where($attribute,Crypt::decryptString($value))->doesntExist();
+                    if($notExist){
+                        $fail('validation.not_in');
+                    }
+                }],
+            ]);
+
+            $user= User::findOrFail(Crypt::decryptString($request->id));
+            $user->condition = ($user->condition == 'Active') ? 'Inactive' : 'Active';
+            $user->save();
+            return Redirect::back()->with('success', 'generic.edit_success');
+
+        } catch (DecryptException $th) {
+            return Redirect::back()->with('warning', 'generic.edit_error');
+        }
     }
 }

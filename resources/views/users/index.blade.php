@@ -2,7 +2,6 @@
 @extends('dashboard.dashboard')
 
 @section('contenido')
-
 @include('errors.alert')
 <div class="container-fluid mt-2">
     <div class="card">
@@ -55,13 +54,13 @@
                             <td>{{ $user->condition }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary rounded text-light btn-sm"
-                                    data-id="{{ $user->id }}"
+                                    data-id="{{ Crypt::encryptString($user->id) }}"
                                     data-name="{{ $user->name }}"
+                                    data-user="{{ $user->user }}"
                                     data-type_doc="{{ $user->type_doc }}"
                                     data-num_doc="{{ $user->num_doc }}"
                                     data-email="{{ $user->email }}"
                                     data-idrol="{{ $user->idrol }}"
-                                    data-user="{{ $user->user }}"
                                     data-adress="{{ $user->adress }}"
                                     data-cel_number="{{ $user->cel_number }}"
                                     data-toggle="modal" data-target="#editUserModal">
@@ -71,7 +70,7 @@
                                 </button>
                                 @if($user->condition == 'Active')
                                     <button type="button" class="btn btn-danger rounded btn-sm"
-                                        data-id="{{ $user->id }}"
+                                        data-id="{{  Crypt::encryptString($user->id) }}"
                                         data-toggle="modal" data-target="#changeCondition">
                                         <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.change') @lang('generic.condition')">
                                             <i class="fa fa-trash"></i>
@@ -79,7 +78,7 @@
                                     </button>
                                 @else
                                     <button type="button" class="btn btn-success rounded btn-sm"
-                                        data-id="{{ $user->id }}"
+                                        data-id="{{  Crypt::encryptString($user->id) }}"
                                         data-toggle="modal" data-target="#changeCondition">
                                         <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.change') @lang('generic.condition')">
                                             <i class="fa fa-check"></i>

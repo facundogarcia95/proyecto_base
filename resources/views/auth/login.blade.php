@@ -47,6 +47,11 @@
                         </p>
                     @endif
                     <br/>
+                    @if (Session::has('custom-error'))
+                    <p class="alert {{ Session::get('alert-class','alert-info') }}">
+                        @lang(Session::get('custom-error'))
+                    </p>
+                @endif
                 </div>
                 <div class="col-12">
                   <button type="submit" class="btn bg-proyectobase text-light px-4 rounded"><i class="fa fa-sign-in fa-2x"></i> {{__('auth.btn-enter')}}</button>

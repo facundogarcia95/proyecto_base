@@ -2,7 +2,8 @@
 @extends('dashboard.dashboard')
 
 @section('contenido')
-            <div class="container-fluid">
+@include('errors.alert')
+            <div class="container-fluid  mt-2">
                 <div class="row">
 
                 </div>

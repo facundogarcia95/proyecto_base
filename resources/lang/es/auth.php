@@ -20,6 +20,10 @@ return [
     'placehoderUser' => 'Ingrese Usuario',
     'placehoderPassword' => 'Ingrese Contraseña',
     'btn-enter' => 'Ingresar',
-    'recaptcha-failed' => 'Fallo en el Recaptcha'
+    'recaptcha-failed' => 'Fallo en el Recaptcha',
+    'invalid_credential' => 'Credenciales Inválidas',
+    'not_login' => 'Debe iniciar sesión',
+    'not_validated_email' => 'Aún no ha validado su correo electrónico',
+    'correct_login' => 'Login correcto',
 
 ];

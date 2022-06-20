@@ -31,6 +31,6 @@ return [
     'change_status' => 'Cambiar Estado',
     'edit_success' => 'Registro modificado exitosamente',
     'add_success' => 'Registro agregado exitosamente',
+    'edit_error' => 'Ocurrió un error al modificar',
     'errors_tittle' => 'Errores',
-
 ];

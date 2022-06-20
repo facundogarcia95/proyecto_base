@@ -30,3 +30,15 @@
     </div>
 </div>
 @endif
+
+
+@if(session()->has('warning'))
+<div class="container-fluid mt-2">
+    <div class="alert alert-warning">
+         @lang(session()->get('warning'))
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+    </div>
+</div>
+@endif

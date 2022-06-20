@@ -3,6 +3,7 @@
 return [
     'email' => 'Email',
     'name' => 'Name',
+    'user' => 'Username',
     'type_doc' => 'Type Doc.',
     'num_doc' => 'N° Doc.',
     'adress' => 'Adress',

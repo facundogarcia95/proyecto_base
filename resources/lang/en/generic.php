@@ -31,5 +31,7 @@ return [
     'change_status' => 'Change Status',
     'edit_success' => 'Record Modified Successfully',
     'add_success' => 'Record added successfully',
+    'edit_error' => 'An error occurred while modifying',
     'errors_tittle' => 'Errors',
+    'invalid_credential' => 'Invalid Credentials',
 ];

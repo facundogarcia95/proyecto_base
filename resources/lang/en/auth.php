@@ -20,5 +20,8 @@ return [
     'placehoderUser' => 'Enter User',
     'placehoderPassword' => 'Enter Password',
     'btn-enter' => 'Submit',
-    'recaptcha-failed' => 'Recaptcha Failed'
+    'recaptcha-failed' => 'Recaptcha Failed',
+    'not_login' => 'You must login',
+    'not_validated_email' => 'You have not yet validated your email',
+    'correct_login' => 'Correct login',
 ];

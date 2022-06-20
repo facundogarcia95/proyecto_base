@@ -3,13 +3,17 @@
 
     <input type="hidden" id="id" name="id" value="">
     <div class="form-row">
-        <div class="form-group col-md-6">
-        <label for="email">@lang('form.email')</label>
-        <input name="email"  type="email"  maxlength="50" class="form-control" id="email" placeholder="@lang('form.email')">
+        <div class="form-group col-md-4">
+            <label for="email">@lang('form.email')</label>
+            <input name="email"  type="email"  maxlength="50" class="form-control" id="email" placeholder="@lang('form.email')" required>
         </div>
-        <div class="form-group col-md-6">
-        <label for="name">@lang('form.name')</label>
-        <input name="name" type="text" class="form-control"  maxlength="100" id="name" placeholder="@lang('form.name')">
+        <div class="form-group col-md-4">
+            <label for="name">@lang('form.name')</label>
+            <input name="name" type="text" class="form-control"  maxlength="100" id="name" placeholder="@lang('form.name')" required>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="user">@lang('form.user')</label>
+            <input name="user" type="text" class="form-control"  maxlength="255" id="user" placeholder="@lang('form.user')" required>
         </div>
     </div>
     <div class="form-row">
@@ -22,19 +26,19 @@
                 @endforeach
             </select>
         </div>
-        <div class="form-group  col-md-8">
+        <div class="form-group  col-md-4">
             <label for="num_doc">@lang('form.num_doc')</label>
             <input name="num_doc" type="text" maxlength="20" class="form-control" id="num_doc" placeholder="@lang('form.num_doc')">
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="adress">@lang('form.adress')</label>
-            <input type="text" class="form-control"  maxlength="70" id="adress" name="adress" placeholder="@lang('form.adress')">
         </div>
         <div class="form-group col-md-4">
             <label for="cel_number">@lang('form.cel_number')</label>
             <input data-inputmask="'mask': '(999)-15-9999999'" data-mask="" type="text" name="cel_number"  maxlength="20" class="form-control" id="cel_number" placeholder="@lang('form.cel_number')">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-8">
+            <label for="adress">@lang('form.adress')</label>
+            <input type="text" class="form-control"  maxlength="70" id="adress" name="adress" placeholder="@lang('form.adress')">
         </div>
         <div class="form-group col-md-4">
             <label for="idrol">@lang('form.rol')</label>

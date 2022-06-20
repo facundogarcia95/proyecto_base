@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use App\Mail\NotifyMailValidated;
 
 class AuthController extends Controller
 {
@@ -59,11 +61,18 @@ class AuthController extends Controller
 
         $credentials = $request->only('user', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('panel')
-                        ->withSuccess('Inicio de sesión correctamente.');
+            if(empty(Auth::user()->email_verified_at)){
+                $user = User::find(Auth::user()->id);
+                Mail::to(Auth::user()->email)->send(new NotifyMailValidated($user));
+                Session::flush();
+                Auth::logout();
+                return redirect("login")->with('custom-error','auth.not_validated_email');
+            }
+            return redirect()->intended('panel')->with('success','auth.correct_login');
+
         }
 
-        return redirect("login")->withSuccess('Ops! Has ingresado credenciales incorrectas.');
+        return redirect("login")->with('custom-error','auth.invalid_credential');
     }
 
     /**
@@ -109,7 +118,7 @@ class AuthController extends Controller
             return view('dashboard');
         }
 
-        return redirect("login")->withSuccess('Opps! You do not have access');
+        return redirect("login")->with('custom-error','auth.not_login');
     }
 
     /**
