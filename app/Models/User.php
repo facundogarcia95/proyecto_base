@@ -26,6 +26,8 @@ class User extends Authenticatable
         'email',
         'user',
         'idrol',
+        'password',
+        'condition'
     ];
 
      /**
@@ -34,11 +36,9 @@ class User extends Authenticatable
      */
     protected $guarded = [
         'id',
-        'condition',
         'remember_token',
         'created_at',
         'updated_at',
-        'password',
         'email_verified_at'
     ];
 
@@ -51,13 +51,22 @@ class User extends Authenticatable
 		return $this->belongsTo(Rol::class, 'idrol');
 	}
 
+     /**
+     * Relashion for conditions
+     *
+     */
+    public function getCondition()
+	{
+		return $this->belongsTo(Conditions::class, 'condition');
+	}
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
@@ -76,11 +85,6 @@ class User extends Authenticatable
      |   FUNCIONES DE LA CLASE
      | -----------------------------------
     */
-
-    public function create_user(User $user){
-        $response = $user->save();
-        return $response;
-    }
 
     public static function listUsers(Request $request = null){
         if(!empty($request) && isset($request->searchText)){

@@ -130,6 +130,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'users_in_rol' => 'To unregister the Role, you will need to remove its assigned users.',
 
     /*
     |--------------------------------------------------------------------------
@@ -159,6 +160,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'Name',
+        'description' => 'Description',
+        'num_doc' => 'Doc. Number',
+        'adress' => 'Adress',
+        'cel_number' => 'Cell Number',
+        'idrol' => 'Rol',
+        'id' => 'ID'
+    ],
 
 ];

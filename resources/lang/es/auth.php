@@ -15,7 +15,7 @@ return [
 
     'failed' => 'Estas credenciales no coinciden con nuestros registros.',
     'password' => 'La contraseña proporcionada es incorrecta.',
-    'throttle' => 'Demasiados intentos de inicio de sesión. Vuelva a intentarlo en :segundos segundos.',
+    'throttle' => 'Demasiados intentos de inicio de sesión. Vubelva a intentarlo en :segundos segundos.',
     'tittleLogin' => 'Ingresar al sistema',
     'placehoderUser' => 'Ingrese Usuario',
     'placehoderPassword' => 'Ingrese Contraseña',
@@ -25,5 +25,5 @@ return [
     'not_login' => 'Debe iniciar sesión',
     'not_validated_email' => 'Aún no ha validado su correo electrónico',
     'correct_login' => 'Login correcto',
-
+    'correct_verify' => 'Verificación Correcta',
 ];

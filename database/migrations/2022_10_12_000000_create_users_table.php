@@ -25,7 +25,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('user')->unique();
             $table->string('password');
-            $table->enum('condition',['Active','Inactive'])->default('Active');
+            $table->integer('condition')->unsigned()->default(1);
+            $table->foreign('condition')->references('id')->on('conditions');
             $table->integer('idrol')->unsigned();
             $table->foreign('idrol')->references('id')->on('roles');
             $table->rememberToken();
@@ -33,7 +34,7 @@ class CreateUsersTable extends Migration
         });
 
         $user = [
-            ['name' => 'Administrador', 'type_doc' => 'DNI', 'num_doc' => '12345567', 'adress' => 'SIN CALLE', 'cel_number' => '2612288191','email' => 'administrador@gmail.com', 'user' => 'administrador', 'password' => bcrypt('administrador'), 'idrol' => 1, 'created_at' => now()]
+            ['name' => 'Super Usuario', 'type_doc' => 'DNI', 'num_doc' => '12345567', 'adress' => 'SIN CALLE', 'cel_number' => '2612288191','email' => 'facunditogarcia@gmail.com', 'user' => 'super', 'password' => bcrypt('super123'), 'idrol' => 1, 'created_at' => now()]
         ];
          DB::table('users')->insert($user);
     }

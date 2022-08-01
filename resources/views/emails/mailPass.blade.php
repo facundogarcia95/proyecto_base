@@ -101,7 +101,7 @@
                             style='padding: 36px 24px 0; font-family: &quot;Source Sans Pro&quot;, Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;'>
                             <h1
                                 style='margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;'>
-                               @lang('emails.notify_pass')</h1>
+                               @lang('emails.notify_pass_reset')</h1>
                         </td>
                     </tr>
                 </table>
@@ -115,13 +115,12 @@
                             <table border='0' cellpadding='0' cellspacing='0' width='90%' style='margin:4px;'>
                                 <tr>
                                     <td colspan='2' align='left' bgcolor='#ffffff' style='padding: 12px;'>
-                                        <p style='margin: 0;'>@lang('emails.header_pass')</p>
-                                        <p style='margin: 0;'>@lang('emails.tittle_pass')</p>
+                                        <p style='margin: 0;'>@lang('emails.header_pass'). @lang('emails.tittle_pass')</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>@lang('emails.your_pass'):</td>
-                                    <td><b style="font-size: 35px;">{{ $password  }}</b></td>
+                                    <td><b style="font-size: 35px;">{{ $password }}</b></td>
                                 </tr>
                             </table>
                         </td>

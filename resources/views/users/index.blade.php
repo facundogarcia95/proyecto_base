@@ -7,11 +7,6 @@
     <div class="card">
         <div class="card-header">
             <h2>@lang('specific.user_list')</h2><br/>
-            @if(Auth::user()->is_admin)
-                <button class="btn btn-primary btn-lg rounded" type="button" data-toggle="modal" data-target="#abrirmodal">
-                    <i class="fa fa-plus"></i> @lang('generic.add') @lang('generic.user')
-                </button>
-            @endif
         </div>
         <div class="card-body">
             <form action="{{ route('users.index') }}" method="get">
@@ -24,11 +19,13 @@
 
                     </div>
                     <div class="col-12 col-md-6">
-                        <button type="button" class="btn btn-primary rounded text-light btn-sm pull-right"  data-toggle="modal" data-target="#addUserModal">
-                            <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.add') @lang('generic.user')">
-                                    <i class="fa fa-plus"></i> @lang('generic.add') @lang('generic.user')
-                            </span>
-                        </button>
+                        @if(Auth::user()->rol->is_admin)
+                            <button type="button" class="btn btn-primary rounded text-light btn-sm pull-right"  data-toggle="modal" data-target="#addUserModal">
+                                <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.add') @lang('generic.user')">
+                                        <i class="fa fa-plus"></i> @lang('generic.add') @lang('generic.user')
+                                </span>
+                            </button>
+                        @endif
                     </div>
                 </div>
             </form>
@@ -51,7 +48,7 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->user }}</td>
                             <td>{{ $user->rol->name }}</td>
-                            <td>{{ $user->condition }}</td>
+                            <td>@lang("generic.{$user->getCondition->name}")</td>
                             <td>
                                 <button type="button" class="btn btn-primary rounded text-light btn-sm"
                                     data-id="{{ Crypt::encryptString($user->id) }}"
@@ -76,6 +73,15 @@
                                             <i class="fa fa-trash"></i>
                                         </span>
                                     </button>
+                                    @if(Auth::user()->rol->is_admin && !$user->rol->is_admin)
+                                        <button type="button" class="btn btn-success rounded btn-sm"
+                                            data-id="{{  Crypt::encryptString($user->id) }}"
+                                            data-toggle="modal" data-target="#resetPassword">
+                                            <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.reset') @lang('generic.password')">
+                                                <i class="fa fa-refresh"></i>
+                                            </span>
+                                        </button>
+                                    @endif
                                 @else
                                     <button type="button" class="btn btn-success rounded btn-sm"
                                         data-id="{{  Crypt::encryptString($user->id) }}"
@@ -176,6 +182,37 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dark" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@lang('generic.reset_password')</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-light">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{route('password_reset')}}" method="POST" class="was-validated">
+                    {{csrf_field()}}
+
+                    <input type="hidden" id="id" name="id" value="">
+                        <p>@lang('generic.messege_confirm')</p>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success rounded">@lang('generic.accept')</button>
+                        <button type="button" class="btn btn-danger rounded" data-dismiss="modal">@lang('generic.cancel')</button>
+                    </div>
+
+                    </form>
+            </div>
+        <!-- /.modal-content -->
+        </div>
+    <!-- /.modal-dialog -->
+    </div>
+</div>
+
 @push('scripts')
     <script>
         $(document).ready(function () {
@@ -219,6 +256,14 @@
                 modal.find('.modal-body #id').val(id);
             });
 
+
+
+            $('#resetPassword').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var modal = $(this);
+                modal.find('.modal-body #id').val(id);
+            });
 
         });
     </script>

@@ -25,6 +25,18 @@ class Rol extends Model
         'condition'
     ];
 
+    protected $guarded = [
+        'is_super',
+    ];
+
+     /**
+     * Relashion for conditions
+     *
+     */
+    public function getCondition()
+	{
+		return $this->belongsTo(Conditions::class, 'condition','id');
+	}
 
     /*
      | -----------------------------------
@@ -32,21 +44,13 @@ class Rol extends Model
      | -----------------------------------
      */
 
-     private function create_rol(Rol $rol){
-
-       $response = $rol->save();
-       return $response;
-
-     }
-
 
      public static function listRoles(Request $request = null){
         if(!empty($request) && isset($request->searchText)){
-            $roles = Rol::where('condition','=','Active')
-            ->where('name','like','%'.$request->searchText.'%')
+            $roles = Rol::where('name','like','%'.$request->searchText.'%')
             ->orWhere('description','like','%'.$request->searchText.'%');
         }else{
-            $roles = Rol::where('roles.condition','=','Active');
+            $roles = Rol::whereNotNull('name');
         }
         return $roles;
     }

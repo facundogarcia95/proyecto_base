@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Lang;
 
-class NotifyMailValidated extends Mailable implements ShouldQueue
+class NotifyUserAdd extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -18,13 +18,14 @@ class NotifyMailValidated extends Mailable implements ShouldQueue
      *
      * @return void
      */
+    public $pass;
+    public User $user;
 
-    public $user;
-
-    public function __construct(User $user)
+    public function __construct(User $user, String $pass)
     {
+        $this->pass = $pass;
         $this->user = $user;
-        $this->subject(Lang::get('emails.validated_subject'));
+        $this->subject(Lang::get('emails.notify_add_user'));
     }
 
     /**
@@ -34,6 +35,6 @@ class NotifyMailValidated extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('emails.validated',['user' => $this->user]);
+        return $this->view('emails.addUser',['user' => $this->user,'password'=>$this->pass]);
     }
 }

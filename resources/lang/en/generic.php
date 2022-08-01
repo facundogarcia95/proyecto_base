@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'Active' => 'Active',
+    'Inactive' => 'Inactive',
     'leng' => 'Language',
     'spanish' => 'Spanish',
     'english' => 'English',
@@ -9,6 +11,9 @@ return [
     'logout' => 'Logout',
     'account' => 'Account',
     'user' => 'User',
+    'rol' => 'Rol',
+    'description' => 'Description',
+    'is_admin' => 'Is Admin',
     'name' => 'Name',
     'username' => 'Username',
     'email' => 'Email',
@@ -30,8 +35,18 @@ return [
     'total_records' => 'Total Records',
     'change_status' => 'Change Status',
     'edit_success' => 'Record Modified Successfully',
+    'edit_password_success' => 'Password Reset Successfully',
     'add_success' => 'Record added successfully',
     'edit_error' => 'An error occurred while modifying',
     'errors_tittle' => 'Errors',
     'invalid_credential' => 'Invalid Credentials',
+    'reset' => 'Reset',
+    'password' => 'Password',
+    'reset_password' => 'Reset User Password',
+    'user_not_edition' => 'Non-modifiable user property',
+    'not_permissions' => 'You do not have permissions to perform this action',
+    'not_description' => 'Without description',
+    'controller' => 'Controller',
+    'action' => 'Action',
+    'expand_record' => 'Expand Records',
 ];

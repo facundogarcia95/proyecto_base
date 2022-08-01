@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use App\Mail\NotifyMailValidated;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
 class AuthController extends Controller
 {
@@ -82,29 +84,8 @@ class AuthController extends Controller
      */
     public function postRegistration(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'g-recaptcha-response' => function($attribute,$value,$fail){
-                $secretKey = config('services.recaptcha.secret');
-                $response = $value;
-                $userIP = $_SERVER["REMOTE_ADDR"];
-                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response&remoteip=$userIP";
-                $response = \file_get_contents($url);
-                $response = json_decode($response);
-                if(!$response->success){
-                    Session::flash('g-recaptcha-response','Check recaptcha');
-                    Session::flash('alert-class','alert-danger');
-                   $fail($attribute.' Google recaptcha failed');
-                }
-            }
-        ]);
-
-        $data = $request->all();
-        $check = $this->create($data);
-
-        return redirect("dashboard");
+        //
+        return false;
     }
 
     /**
@@ -115,7 +96,7 @@ class AuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            return view('dashboard');
+            return view('dashboard.dashboard');
         }
 
         return redirect("login")->with('custom-error','auth.not_login');
@@ -150,5 +131,17 @@ class AuthController extends Controller
 
     public static function getUserLogin(){
         return Auth::user();
+    }
+
+    public function validate_email($id){
+        try {
+            $user = User::findOrFail(Crypt::decryptString($id));
+            $user->email_verified_at = now();
+            $user->save();
+            Auth::login($user);
+            return redirect()->intended('panel')->with('success','auth.correct_verify');
+        } catch (DecryptException $th) {
+            return Redirect::to('login')->with('custom-error', 'generic.invalid_credential');
+        }
     }
 }

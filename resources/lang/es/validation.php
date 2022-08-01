@@ -126,10 +126,11 @@ return [
     'starts_with' => 'El :attribute debe empezar con uno de los siguientes valores :values',
     'string' => 'El campo :attribute debe ser una cadena.',
     'timezone' => 'El campo :attribute debe ser una zona válida.',
-    'unique' => 'El campo :attribute ya ha sido tomado.',
+    'unique' => 'El campo :attribute ya existe.',
     'uploaded' => 'El campo :attribute no ha podido ser cargado.',
     'url' => 'El formato de :attribute no es válido.',
     'uuid' => 'El :attribute debe ser un UUID valido.',
+    'users_in_rol' => 'Para dar de baja al Rol, deberá quitar sus usuarios asignados.',
 
     /*
     |--------------------------------------------------------------------------
@@ -159,6 +160,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'Nombre',
+        'description' => 'Descripción',
+        'num_doc' => 'N° de Documento',
+        'adress' => 'Dirección',
+        'cel_number' => 'N° de Celular',
+        'idrol' => 'Rol',
+        'id' => 'ID'
+    ],
 
 ];

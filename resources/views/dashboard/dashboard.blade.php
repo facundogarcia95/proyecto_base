@@ -56,7 +56,9 @@
             <li class="nav-item dropdown">
                 <a class="nav-link mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img src="{{asset('imgs/avatars/4.jpg')}}" class="img-avatar" class="img-avatar" alt="Imagen Avatar">
-                    <span>{{Auth::user()->user}}</span>
+                    @if(Auth::check())
+                        <span>{{Auth::user()->user}}</span>
+                    @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">

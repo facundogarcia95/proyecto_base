@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'Active' => 'Activo',
+    'Inactive' => 'Inactivo',
     'leng' => 'Idioma',
     'spanish' => 'Español',
     'english' => 'Inglés',
@@ -9,6 +11,9 @@ return [
     'logout' => 'Cerrar Sesión',
     'account' => 'Cuenta',
     'user' => 'Usuario',
+    'rol' => 'Rol',
+    'description' => 'Descripción',
+    'is_admin' => 'Es Admin',
     'name' => 'Nombre',
     'username' => 'Usuario',
     'email' => 'Email',
@@ -30,7 +35,17 @@ return [
     'total_records' => 'Total de Registros',
     'change_status' => 'Cambiar Estado',
     'edit_success' => 'Registro modificado exitosamente',
+    'edit_password_success' => 'Contraseña reseteada exitosamente',
     'add_success' => 'Registro agregado exitosamente',
     'edit_error' => 'Ocurrió un error al modificar',
     'errors_tittle' => 'Errores',
+    'reset' => 'Resetear',
+    'password' => 'Contraseña',
+    'reset_password' => 'Resetear contraseña del usuario',
+    'user_not_edition' => 'Propiedad del usuario no modificable',
+    'not_permissions' => 'No posee permisos para realizar esta acción',
+    'not_description' => 'Sin descripción',
+    'controller' => 'Controlador',
+    'action' => 'Acción',
+    'expand_record' => 'Expandir',
 ];

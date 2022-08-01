@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PanelController;
-use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\Permission\PermissionController;
 use App\Http\Controllers\Rol\RolesController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\App;
@@ -32,11 +32,17 @@ Route::group([], function () {
         session()->put('locale',$locale);
         return Redirect::back();
     });
+
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('login', [AuthController::class, 'index'])->name('login');
-    Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
-    Route::get('registration', [AuthController::class, 'registration'])->name('register');
-    Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
+
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('login','index')->name('login');
+        Route::post('post-login','postLogin')->name('login.post');
+        Route::get('registration','registration')->name('register');
+        Route::post('post-registration','postRegistration')->name('register.post');
+        Route::get('validate_email/{id}','validate_email');
+    });
+
 });
 
 
@@ -45,7 +51,7 @@ Route::group([], function () {
 |ROUTES WITH AUTENTICATION
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','UserState']], function () {
     /**
      * RUTAS GENERICAS PARA TODOS LOS USUARIOS CON LOGIN
      */
@@ -54,6 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('panel', [PanelController::class, 'index'])->name('panel');
     Route::get('dashboard', [AuthController::class, 'dashboard']);
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('validate_email/{$id}', [AuthController::class, 'validate_email']);
 
     /**
      * RUTAS ESPECIFICAS SEGÚN ROL, LAS MISMAS, EVALÚAN SI EL ROL DEL USUARIO POSEE PREMISOS CON EL MIDDLEWARE
@@ -64,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('users', UserController::class,['names' => ['as' => 'prefix']]);
         Route::resource('roles', RolesController::class,['names' => ['as' => 'prefix']]);
         Route::resource('permissions', PermissionController::class,['names' => ['as' => 'prefix']]);
+        Route::post('password_reset',[UserController::class,'password_reset'])->name('password_reset');
 
     });
 

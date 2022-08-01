@@ -21,20 +21,13 @@ class CreatePermissionsTable extends Migration
             $table->foreign('idrol')->references('id')->on('roles');
             $table->string('controller',100)->nullable(false);
             $table->string('action',100)->nullable(false);
-            $table->string('name',100)->nullable();
+            $table->string('name',100)->nullable(false);
             $table->text('description')->nullable();
-            $table->enum('condition',['Active','Inactive'])->default('Active');
+            $table->integer('condition')->unsigned();
+            $table->foreign('condition')->references('id')->on('conditions');
         });
 
-        DB::table('permissions')->insert([
-                ['idrol'=>'1','controller'=>'UserController','action'=>'index','name'=>'users','description' => 'Permite ver listado de Usuarios'],
-                ['idrol'=>'1','controller'=>'RolesController','action'=>'index','name'=>'roles','description' => 'Permite ver listado de Roles que no son administrador'],
-                ['idrol'=>'1','controller'=>'PermissionController','action'=>'index','name'=>'permissions','description' => 'Permite ver listado de permisos activos para el rol del usuario'],
-                ['idrol'=>'1','controller'=>'UserController','action'=>'destroy','name'=>'users.destroy','description' => 'Desactivación de Usuario'],
-                ['idrol'=>'1','controller'=>'UserController','action'=>'update','name'=>'users.update','description' => 'Actualización de Usuario'],
-                ['idrol'=>'1','controller'=>'UserController','action'=>'store','name'=>'users.store','description' => 'Agregar usuario'],
-            ]
-        );
+
 
     }
 

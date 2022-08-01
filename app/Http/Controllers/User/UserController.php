@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Mail\NotifyMailPass;
+use App\Mail\NotifyUserAdd;
 use App\Models\Rol;
 use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -28,7 +29,7 @@ class UserController extends Controller
          */
         $users = User::listUsers($request)->paginate(10);
         $types_doc = $this::getPossibleEnumValues(app(User::class)->getTable(),'type_doc');
-        $roles = Rol::listRoles()->get();
+        $roles = Rol::listRoles()->where('condition','=',1)->get();
         return view('users.index',['users'=>$users,'types_doc' => $types_doc,'roles' => $roles]);
     }
 
@@ -63,6 +64,11 @@ class UserController extends Controller
                 'num_doc' => 'max:20|unique:users,num_doc',
                 'adress' => 'max:70',
                 'cel_number' => 'max:20',
+                'password' => [function($attribute,$value,$fail){
+                    if(!is_null($value)){
+                        $fail('validation.not_in');
+                    }
+                }],
             ]);
 
             //REMOVE UNUSED PARAMETERS
@@ -70,16 +76,15 @@ class UserController extends Controller
             $request->request->remove('id');
 
             //ADD RAMDOM PASSWORD
-            $pass = random_int(1000,9999);
-            $random_password = Hash::make($pass);
-            $request->request->add(['password'=>$random_password]);
+            $random_password = $this->ramdomPass();
+
+            $request->request->add(['password'=>$random_password["pass_cryp"]]);
 
             //ADD USER AND SEND INITIAL PASSWORD
-            User::insert($request->all());
+            $user = User::create($request->all());
 
             //THE FOLLOWING COMMAND SHOULD BE RUN "php artisan queue:work"
-            Mail::to($request->email)->send(new NotifyMailPass($pass));
-
+            Mail::to($request->email)->send(new NotifyUserAdd($user,$random_password["pass"]));
             return Redirect::back()->with('success', 'generic.add_success');
     }
 
@@ -156,12 +161,46 @@ class UserController extends Controller
             ]);
 
             $user= User::findOrFail(Crypt::decryptString($request->id));
-            $user->condition = ($user->condition == 'Active') ? 'Inactive' : 'Active';
+            $user->condition = ($user->condition == 1) ? 2 : 1;
             $user->save();
             return Redirect::back()->with('success', 'generic.edit_success');
 
         } catch (DecryptException $th) {
             return Redirect::back()->with('warning', 'generic.edit_error');
         }
+    }
+
+    public function password_reset(Request $request){
+        try {
+            //ADD RAMDOM PASSWORD
+            $random_password = $this->ramdomPass();
+
+            //ADD USER AND SEND INITIAL PASSWORD
+            $user = User::findOrFail(Crypt::decryptString($request->id));
+
+            if($user->rol->is_admin){
+                return Redirect::back()->with('warning', 'generic.user_not_edition');
+            }
+
+            $user->password = $random_password["pass_cryp"];
+            $user->save();
+
+            //THE FOLLOWING COMMAND SHOULD BE RUN "php artisan queue:work"
+            Mail::to($user->email)->send(new NotifyMailPass($random_password["pass"]));
+            return Redirect::back()->with('success', 'generic.edit_password_success');
+
+        }  catch (DecryptException $th) {
+            return Redirect::back()->with('warning', 'generic.edit_error');
+        }
+    }
+
+    private function ramdomPass(){
+        $pass = str_shuffle(random_int(100000,999999)."asdf");
+        $random_password = Hash::make($pass);
+
+        return [
+            "pass" => $pass,
+            "pass_cryp" => $random_password
+        ];
     }
 }

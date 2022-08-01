@@ -2,13 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Permiso;
-use App\Models\Permission;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RoutesWithPermission
+class UserState
 {
     /**
      * Handle an incoming request.
@@ -19,16 +17,11 @@ class RoutesWithPermission
      */
     public function handle(Request $request, Closure $next)
     {
-        list($controller, $action) = explode("@",class_basename($request->route()->getAction()["controller"]));
-        $permission = Permission::where('idrol','=', Auth::user()->idrol)
-        ->where('controller','=',$controller)
-        ->where('action','=',$action)
-        ->where('condition','=',1)
-        ->first();
 
-        if(!$permission && !Auth::user()->rol->is_super){
-            abort(403,"Permisos insuficientes para ".$action);
+        if(Auth::user()->condition == "Inactive"){
+            abort(403,"Su usuario está inactivo");
         }
         return $next($request);
+
     }
 }

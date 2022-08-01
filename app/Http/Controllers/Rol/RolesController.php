@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Rol;
 
 use App\Http\Controllers\Controller;
 use App\Models\Rol;
+use App\Models\User;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redirect;
 
 class RolesController extends Controller
 {
@@ -13,10 +18,13 @@ class RolesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Rol::listRoles()->paginate(10);
-        return view('roles.index',['roles'=>$roles]);
+       /**
+         * OBTENER TODOS LOS ROLES
+         */
+        $roles = Rol::listRoles($request)->paginate(10);
+        return view('roles.index',['roles' => $roles]);
     }
 
     /**
@@ -26,7 +34,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        //
+        return false;
     }
 
     /**
@@ -37,7 +45,20 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //REMOVE UNUSED PARAMETERS
+        $request->request->remove('_token');
+        $request->request->remove('id');
+        $request->merge(['is_admin' => ($request->is_admin == "on") ? 1 : 0]);
+
+        $request->validate([
+            'name' => 'required|max:30|unique:roles,name',
+            'description' => 'required|max:100',
+            'is_admin' => 'required|boolean',
+        ]);
+
+        //ADD ROL
+        $rol = Rol::create($request->all());
+        return Redirect::back()->with('success', 'generic.add_success');
     }
 
     /**
@@ -48,7 +69,7 @@ class RolesController extends Controller
      */
     public function show($id)
     {
-        //
+        return false;
     }
 
     /**
@@ -57,9 +78,9 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
-        //
+      return false;
     }
 
     /**
@@ -71,7 +92,30 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(!Auth::user()->rol->is_admin){
+            return Redirect::back()->with('warning', 'generic.not_permissions');
+        }
+
+        try {
+            $request->merge(['is_admin' => ($request->is_admin == "on") ? 1 : 0]);
+            $request->validate([
+                'id' =>  [function($attribute,$value,$fail){
+                    $notExist = Rol::where($attribute,Crypt::decryptString($value))->doesntExist();
+                    if($notExist){
+                        $fail('validation.not_in');
+                    }
+                }],
+                'name' => 'required|max:30|unique:roles,name,'.Crypt::decryptString($request->id).',id',
+                'description' => 'required|max:100',
+                'is_admin' => 'required|boolean',
+            ]);
+            $rol = Rol::findOrFail(Crypt::decryptString($request->id));
+            $rol->update($request->all());
+            return Redirect::back()->with('success', 'generic.edit_success');
+
+        } catch (DecryptException $th) {
+            return Redirect::back()->with('warning', 'generic.edit_error');
+        }
     }
 
     /**
@@ -80,9 +124,29 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        try {
+            $request->validate([
+                'id' =>  [function($attribute,$value,$fail){
+                    $notExist = Rol::where($attribute,Crypt::decryptString($value))->doesntExist();
+                    if($notExist){
+                        $fail('validation.not_in');
+                    }
+                    $usersInRol = User::where('idrol','=',Crypt::decryptString($value))->count();
+                    if($usersInRol){
+                        $fail('validation.users_in_rol');
+                    }
+                }],
+            ]);
+
+            $rol= Rol::findOrFail(Crypt::decryptString($request->id));
+            $rol->condition = ($rol->condition == 1) ? 2 : 1;
+            $rol->save();
+            return Redirect::back()->with('success', 'generic.edit_success');
+        } catch (DecryptException $th) {
+            return Redirect::back()->with('warning', 'generic.edit_error');
+        }
     }
 
 }

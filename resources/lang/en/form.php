@@ -12,4 +12,8 @@ return [
     'select' => 'Select',
     'save' => 'Save',
     'cancel' => 'Cancel',
+    'description' => 'Description',
+    'is_admin' => 'Is Admin',
+    'add_description' => 'Add Description',
+    'description_permission' => 'Functionality Description',
 ];

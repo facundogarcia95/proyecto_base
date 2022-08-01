@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Lang;
 
 class NotifyMailPass extends Mailable implements ShouldQueue
 {
@@ -22,7 +23,7 @@ class NotifyMailPass extends Mailable implements ShouldQueue
     public function __construct(String $pass)
     {
        $this->pass = $pass;
-       $this->subject('Password FGH System');
+       $this->subject(Lang::get('emails.password_send'));
     }
 
     /**

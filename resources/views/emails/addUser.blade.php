@@ -98,10 +98,10 @@
                 <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                     <tr>
                         <td align='left' bgcolor='#ffffff'
-                            style='padding-bottom: 36px; font-family: &quot;Source Sans Pro&quot;, Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;'>
+                            style='padding: 36px 24px 0; font-family: &quot;Source Sans Pro&quot;, Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;'>
                             <h1
                                 style='margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;'>
-                               @lang('emails.notify_validated')</h1>
+                               @lang('emails.notify_add_user')</h1>
                         </td>
                     </tr>
                 </table>
@@ -112,12 +112,15 @@
                 <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                     <tr>
                         <td align='left' bgcolor='#ffffff'>
-                            <table border='0' cellpadding='0' cellspacing='0'>
+                            <table border='0' cellpadding='0' cellspacing='0' width='90%' style='margin:4px;'>
                                 <tr>
-                                    <td colspan='2' align='left' bgcolor='#ffffff'>
-                                        <p style='margin: 0;'>@lang('emails.header_validated')</p>
-                                        <p style='margin: 0;'>@lang('emails.tittle_validated')</p>
+                                    <td colspan='2' align='left' bgcolor='#ffffff' style='padding: 12px;'>
+                                        <p style='margin: 0;'>@lang('emails.header_pass'). @lang('emails.tittle_pass')</p>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>@lang('emails.your_pass'):</td>
+                                    <td><b style="font-size: 35px;">{{ $password  }}</b></td>
                                 </tr>
                                 <tr>
                                     <td>@lang('emails.your_validated'):</td>
@@ -132,7 +135,7 @@
                     </tr>
                     <tr>
                         <td align='left' bgcolor='#ffffff'
-                            style='padding-top: 24px; font-family: &quot;Source Sans Pro&quot;, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf'>
+                            style='padding: 24px; font-family: &quot;Source Sans Pro&quot;, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf'>
                             <p style='margin: 0;'>{{ env('APP_ADM_TITLE') }}</p>
                         </td>
                     </tr>
@@ -148,7 +151,7 @@
                     <tr>
                         <td align='center' bgcolor='#e9ecef'
                             style='padding: 12px 24px; font-family: &quot;Source Sans Pro&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;'>
-                            <p style='margin: 0;'>@lang('emails.footer_validated')</p>
+                            <p style='margin: 0;'>@lang('emails.footer_pass')</p>
                         </td>
                     </tr>
                 </table>

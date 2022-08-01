@@ -24,4 +24,5 @@ return [
     'not_login' => 'You must login',
     'not_validated_email' => 'You have not yet validated your email',
     'correct_login' => 'Correct login',
+    'correct_verify' => 'Correct verification',
 ];

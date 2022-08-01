@@ -12,4 +12,8 @@ return [
     'select' => 'Seleccione',
     'save' => 'Guardar',
     'cancel' => 'Cancelar',
+    'description' => 'Description',
+    'is_admin' => 'Es Administrador',
+    'add_description' => 'Colocar Descripción',
+    'description_permission' => 'Descripción de funcionalidad',
 ];
