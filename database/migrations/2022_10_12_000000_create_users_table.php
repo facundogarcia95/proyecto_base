@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name',100);
             $table->enum('type_doc',['DNI','L.C','L.E','Pasaporte'])->nullable();
-            $table->string('num_doc',20)->nullable();
+            $table->string('num_doc',20)->unique()->nullable();
             $table->string('adress',70)->nullable();
             $table->string('cel_number',20)->nullable();
             $table->string('email',50);

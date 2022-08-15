@@ -21,7 +21,7 @@ class CreateRolesTable extends Migration
             $table->string('description',100)->nullable(false);
             $table->boolean('is_admin')->default(0);
             $table->boolean('is_super')->default(0);
-            $table->integer('condition')->unsigned()->default(1);;
+            $table->integer('condition')->unsigned()->default(1);
             $table->foreign('condition')->references('id')->on('conditions');
             //$table->timestamps();
         });

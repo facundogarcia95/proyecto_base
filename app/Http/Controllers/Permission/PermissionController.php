@@ -100,12 +100,13 @@ class PermissionController extends Controller
                     'action' => 'required',
                     'name' => 'required',
                     'idrol' =>  [function($attribute,$value,$fail){
-                        $notExist = Permission::where($attribute,Crypt::decryptString($value))->doesntExist();
+                        $notExist = Rol::where('id','=',Crypt::decryptString($value))->doesntExist();
                         if($notExist){
                             $fail('validation.not_in');
                         }
                     }]
                 ]);
+
                 $permission = new Permission();
                 $permission->controller = Crypt::decryptString($request->controller);
                 $permission->action = Crypt::decryptString($request->action);

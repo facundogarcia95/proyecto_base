@@ -23,7 +23,7 @@ class CreatePermissionsTable extends Migration
             $table->string('action',100)->nullable(false);
             $table->string('name',100)->nullable(false);
             $table->text('description')->nullable();
-            $table->integer('condition')->unsigned();
+            $table->integer('condition')->unsigned()->default(1);
             $table->foreign('condition')->references('id')->on('conditions');
         });
 

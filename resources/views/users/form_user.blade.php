@@ -42,7 +42,7 @@
         </div>
         <div class="form-group col-md-4">
             <label for="idrol">@lang('form.rol')</label>
-            <select name="idrol" id="idrol"  class="form-control">
+            <select name="idrol" id="idrol"  class="form-control" required>
                 <option value="" disabled selected>@lang('form.select')...</option>
                 @foreach($roles as $rol)
                     <option value="{{ $rol->id }}">{{ $rol->name }}</option>
