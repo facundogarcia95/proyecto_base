@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\ListadoAjax;
 
 class User extends Authenticatable
 {
@@ -68,6 +68,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'remember_token',
+        'password',
+        'created_at',
+        'updated_at',
+        'email_verified_at',
     ];
 
     /**
@@ -86,18 +90,20 @@ class User extends Authenticatable
      | -----------------------------------
     */
 
-    public static function listUsers(Request $request = null){
-        if(!empty($request) && isset($request->searchText)){
-            $users = User::select('users.*')->join('roles','users.idrol','=','roles.id')
-            ->where('roles.condition','=',1)
-            ->where('users.name','like','%'.$request->searchText.'%')
-            ->orWhere('user','like','%'.$request->searchText.'%')
-            ->orWhere('email','like','%'.$request->searchText.'%');
-        }else{
-            $users = User::select('users.*')->join('roles','users.idrol','=','roles.id')
-            ->where('roles.condition','=',1);
-        }
-        return $users;
+    public static function listUsers($params = []){
+        $columns = 'users.name,users.email,users.user';
+
+        $params['start']  = (!isset($params['start'])  || empty($params['start']) )  ? 0 :$params['start'];
+        $params['lenght'] = (!isset($params['lenght']) || empty($params['lenght']) ) ? 10 :$params['lenght'];
+        $params['search'] = (!isset($params['search']) || empty($params['search']) ) ? '' :$params['search'];
+
+        $query = User::select('users.*','roles.name as rolname','conditions.name as condition_name')->join('roles','users.idrol','=','roles.id')
+        ->join('conditions','users.condition','=','conditions.id')
+        ->where('roles.condition','=',1);
+
+        $data = ListadoAjax::listAjax($columns, $query, $params);
+
+        return $data;
     }
 
 }

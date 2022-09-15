@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
@@ -89,5 +90,36 @@ class Controller extends BaseController
         flush();
         readfile($file_name);
         unlink($file_name);
+    }
+
+    /**
+     * CryptsOrDeletesAjaxElements function
+     *
+     * @param array $data
+     * @param array $crypts_colums Colums to generate Crypt
+     * @param array $deletes_columns Columns to unset from data
+     * @return array $data processed filters
+     */
+    public static function CryptsOrDeletesAjaxElements($data, $crypts_colums = [], $deletes_columns = []){
+
+        $data = array_map(function ($data) use ($crypts_colums) {
+            for ($i=0; $i < count($crypts_colums); $i++) {
+                if(array_key_exists($crypts_colums[$i],$data)){
+                    $data[$crypts_colums[$i]] = Crypt::encryptString($data[$crypts_colums[$i]]);
+                }
+            }
+            return $data;
+        },$data);
+
+        $data = array_map(function ($data) use ($deletes_columns) {
+            for ($i=0; $i < count($deletes_columns); $i++) {
+                if(array_key_exists($deletes_columns[$i],$data)){
+                    unset( $data[$deletes_columns[$i]] );
+                }
+            }
+            return $data;
+        },$data);
+
+        return $data;
     }
 }

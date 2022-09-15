@@ -14,23 +14,73 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a view of users.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index(Request $request)
     {
         /**
          * OBTENER TODOS LOS USUARIOS QUE TIENE ROL ACTIVO Y NO ES ADMINISTRADOR
          */
-        $users = User::listUsers($request)->paginate(10);
         $types_doc = $this::getPossibleEnumValues(app(User::class)->getTable(),'type_doc');
         $roles = Rol::listRoles()->where('condition','=',1)->get();
-        return view('users.index',['users'=>$users,'types_doc' => $types_doc,'roles' => $roles]);
+        return view('users.index',['types_doc' => $types_doc,'roles' => $roles]);
+    }
+
+    /**
+     * Display a listing json of the resource.
+     *
+     * @return Json
+     */
+    public function ajax_list(Request $request){
+
+        $request->validate([
+            'search' => 'required'
+        ]);
+
+        $dataTable_columns	= $request->columns;
+        $orders	= [];
+
+        foreach($orden = (array)$request->order as $i => $val){
+            $orders[]	= [
+                'column'	=> (!empty($tmp = $orden[$i]) && !empty($dataTable_columns) && is_array($dataTable_columns[0]))
+                        ? $dataTable_columns[ (int)$tmp['column'] ]['data']	: 'id',
+                'dir'	=> !empty($tmp = $orden[$i]['dir'])
+                        ? $tmp	:	'desc',
+            ];
+        }
+
+        $date  = [];
+        if( preg_match('/^\d{2}\/\d{2}\/\d{4}/', $request->search['value'],$date)){
+            $el_resto = \preg_replace('/^\d{2}\/\d{2}\/\d{4}/','', $request->search['value']);
+            $search = \DateTime::createFromFormat('d/m/Y',$date[0])->format('Y-m-d').$el_resto;
+        }else {
+            $search =  $request->search['value'];
+        }
+        $params	= [
+            'order'		=> $orders,
+            'start'		=> !empty($tmp = $request->start)
+                        ? $tmp : 0,
+            'lenght'	=> !empty($tmp = $request->length)
+                        ? $tmp : 10,
+            'search'	=> !empty($search)
+                        ? $search : '',
+            'filters'   => [
+
+            ],
+        ];
+        $data =  User::listUsers($params);
+        $data["data"] = $this::CryptsOrDeletesAjaxElements($data["data"],['id']);
+        $data['draw']	= (int) $request->draw;
+
+        return Response::json($data,200);
+
     }
 
     /**
