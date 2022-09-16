@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
         });
 
         $user = [
-            ['name' => 'Super Usuario', 'type_doc' => 'DNI', 'num_doc' => '12345567', 'adress' => 'SIN CALLE', 'cel_number' => '2612288191','email' => 'facunditogarcia@gmail.com', 'email_verified_at'=> now(), 'user' => 'super', 'password' => bcrypt('super123'), 'idrol' => 1, 'created_at' => now()]
+            ['name' => 'Super Usuario', 'type_doc' => 'DNI', 'num_doc' => '12345567', 'adress' => 'SIN CALLE', 'cel_number' => '2612288191','email' => 'facunditogarcia@gmail.com', 'email_verified_at'=> now(), 'user' => 'super', 'password' => bcrypt('1234'), 'idrol' => 1, 'created_at' => now()]
         ];
          DB::table('users')->insert($user);
     }

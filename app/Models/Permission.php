@@ -63,15 +63,17 @@ class Permission extends Model
         foreach ($all_routes as $item) {
             if(in_array($middleware,$item->getAction()["middleware"])){
                 list($controller, $action) = explode("@",class_basename($item->getAction()["controller"]));
-                $ruta = new Permission();
-                $ruta->controller = $controller;
-                $ruta->action = $action;
-                $ruta->name = $item->getName();
-                $routes->push($ruta);
+                if($controller != class_basename(PermissionController::class)){
+                    $ruta = new Permission();
+                    $ruta->controller = $controller;
+                    $ruta->action = $action;
+                    $ruta->name = $item->getName();
+                    $routes->push($ruta);
+                }
             }
         }
 
-        return $routes;
+        return $routes->sort();
      }
 
 }

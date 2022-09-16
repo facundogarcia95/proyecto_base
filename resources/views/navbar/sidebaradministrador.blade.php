@@ -12,14 +12,14 @@
                             <a class="nav-link" href="{{route('users.index')}}"><i class="fa text-light fa-user"></i> @lang('menu.users')</a>
                         </li>
                     @endif
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('roles.index')}}"><i class="fa text-light fa-user"></i> @lang('menu.roles')</a>
+                    </li>
                     @if(Auth::user()->rol->is_super)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('roles.index')}}"><i class="fa text-light fa-user"></i> @lang('menu.roles')</a>
+                            <a class="nav-link" href="{{route('permissions.index')}}"><i class="fa text-light fa-user"></i> @lang('menu.permissions')</a>
                         </li>
                     @endif
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('permissions.index')}}"><i class="fa text-light fa-user"></i> @lang('menu.permissions')</a>
-                    </li>
                 </ul>
             </nav>
             <button class="sidebar-minimizer brand-minimizer" type="button"></button>

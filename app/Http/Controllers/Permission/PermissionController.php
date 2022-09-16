@@ -20,7 +20,7 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        //OBTENEMOS TODAS LAS RUTAS PARA UN MIDDLEWARE
+        //OBTENEMOS TODAS LAS RUTAS PARA UN MIDDLEWARE Y QUE NO SEA LA DE PERMISSION CONTROLLER
         $obj_permiso = new Permission();
         $routes = $obj_permiso->list_routes_in_middleware('RoutesWithPermission')->all();
         $permissions =  Permission::all();
