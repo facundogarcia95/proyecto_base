@@ -15,15 +15,27 @@
     <link href="{{asset('css/librerias/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/librerias/simple-line-icons.min.css')}}" rel="stylesheet">
     <!-- Main styles for this application -->
-    <link href="{{asset('css/librerias/style.css')}}" rel="stylesheet">
+    <link href="{{asset('css/app.css')}}" rel="stylesheet">
     <link href="{{asset('css/librerias/estilos.css')}}" rel="stylesheet">
     <style>
     body {
-        background-image:url("{{asset('img').'/'.env('IMAGEN_FONDO')}}");
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        background: linear-gradient(to right, #00b09b, #96c93d);
+    }
+    .g-recaptcha {
+        -webkit-transform: scale(0.77);
+        -moz-transform: scale(0.77);
+        -ms-transform: scale(0.77);
+        -o-transform: scale(0.77);
+        transform: scale(0.77);
+        -webkit-transform-origin: 0 0;
+        -moz-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        transform-origin: 0 0;
     }
     </style>
     <script src="https://www.google.com/recaptcha/api.js?hl={{ str_replace('_', '-', app()->getLocale()) }}" async defer></script>

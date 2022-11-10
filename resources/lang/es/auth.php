@@ -16,7 +16,7 @@ return [
     'failed' => 'Estas credenciales no coinciden con nuestros registros.',
     'password' => 'La contraseña proporcionada es incorrecta.',
     'throttle' => 'Demasiados intentos de inicio de sesión. Vubelva a intentarlo en :segundos segundos.',
-    'tittleLogin' => 'Ingresar al sistema',
+    'tittleLogin' => 'LOGIN',
     'placehoderUser' => 'Ingrese Usuario',
     'placehoderPassword' => 'Ingrese Contraseña',
     'btn-enter' => 'Ingresar',

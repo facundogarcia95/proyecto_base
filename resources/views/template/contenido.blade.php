@@ -44,10 +44,10 @@
         <ul class="nav navbar-nav ml-auto">
             @if(env('APP_MULTILANGUAGE'))
                 <li class="nav-item dropdown">
-                    <a class="nav-link mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link mr-4 rounded" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <span >{{__('generic.leng')}}</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-right rounded">
                         <a class="dropdown-item @if(App::getLocale() == "en") active @endif" href="{{ url('locale/en') }}">{{ __('generic.english') }}</a>
                         <a class="dropdown-item @if(App::getLocale() == "es") active @endif" href="{{ url('locale/es') }}">{{ __('generic.spanish') }}</a>
                     </div>
@@ -60,11 +60,11 @@
                         <span>{{Auth::user()->user}}</span>
                     @endif
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-right rounded">
                     <div class="dropdown-header text-center">
                         <strong>@lang('generic.account')</strong>
                     </div>
-                    <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a class="dropdown-item pointer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fa fa-lock"></i> @lang('generic.logout')</a>
                     <form id="logout-form" action="{{url('logout')}}" method="GET" style="display: none;">
                     {{ csrf_field() }}

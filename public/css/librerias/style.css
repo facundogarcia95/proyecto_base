@@ -164,7 +164,6 @@ a {
   background-color: transparent;
   -webkit-text-decoration-skip: objects; }
   a:hover {
-    color: #1cbbfa;
     text-decoration: underline; }
 
 a:not([href]):not([tabindex]) {
@@ -2191,9 +2190,9 @@ tbody.collapse.show {
   background: none;
   border: 0; }
   .dropdown-item:focus, .dropdown-item:hover {
-    color: #0b0e0f;
+    font-weight: bold;
     text-decoration: none;
-    background-color: #f0f3f5; }
+    }
   .dropdown-item.active, .dropdown-item:active {
     color: #fff;
     text-decoration: none;
@@ -7995,7 +7994,7 @@ base-chart.chart {
         color: #20a8d8; }
     .sidebar .nav-link:hover, .sidebar .navbar .dropdown-toggle:hover, .navbar .sidebar .dropdown-toggle:hover {
       color: #fff;
-      background: #350404; }
+      background: linear-gradient(to right, #00b09b, #96c93d); }
       .sidebar .nav-link:hover i, .sidebar .navbar .dropdown-toggle:hover i, .navbar .sidebar .dropdown-toggle:hover i {
         color: #fff; }
       .sidebar .nav-link:hover.nav-dropdown-toggle::before, .sidebar .navbar .dropdown-toggle:hover.nav-dropdown-toggle::before, .navbar .sidebar .dropdown-toggle:hover.nav-dropdown-toggle::before {

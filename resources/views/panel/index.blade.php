@@ -1,5 +1,5 @@
 
-@extends('dashboard.dashboard')
+@extends('template.contenido')
 
 @section('contenido')
 @include('errors.alert')

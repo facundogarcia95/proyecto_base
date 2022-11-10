@@ -16,7 +16,7 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'tittleLogin' => 'Login to the system',
+    'tittleLogin' => 'Login',
     'placehoderUser' => 'Enter User',
     'placehoderPassword' => 'Enter Password',
     'btn-enter' => 'Submit',

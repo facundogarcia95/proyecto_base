@@ -184,7 +184,7 @@ VENTANAS MODALES LATERALES
     list-style:none;
 }
 .pointer{
-    cursor:pointer;
+    cursor:pointer !important;
 }
 
 

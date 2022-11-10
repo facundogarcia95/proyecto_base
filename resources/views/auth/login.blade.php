@@ -2,7 +2,7 @@
 @section('contenido')
 
 @if(env('APP_MULTILANGUAGE'))
-    <div class="row">
+    <div class="row mt-5 mb-2">
         <div class="col-12">
             <div class="dropdown pull-right">
                 <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,46 +17,53 @@
     </div>
 @endif
 
-<div class="row justify-content-center">
+<div class="row justify-content-center my-auto">
       <div class="col-md-5">
         <div class="card-group mb-0">
           <div class="card p-4 rounded" style="opacity: 0.95">
-          <form class="form-horizontal was-validated" method="POST" action="{{route('login.post')}}">
+          <form class="form-horizontal " method="POST" action="{{route('login.post')}}">
             @csrf
               <div class="card-body">
                 <div style="text-align: center"></div>
+                
+                <h5 class="text-center font-weight-bold text-light"><label style="color:#323232"> {{ __('auth.tittleLogin') }}</label></h5>
 
-              <h3 class="text-center bg-while text-light p-2"><label style="color:#0074FF"> {{ __('auth.tittleLogin') }}</label></h3>
+                <div class="input-group mb-2 mr-sm-2 {{$errors->has('user' ? 'is-invalid' : '')}}">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="icon-user"></i></div>
+                  </div>
+                  <input type="text" value="{{old('user')}}" name="user" id="user" class="form-control" placeholder="{{__('auth.placehoderUser')}}" required>
+                  {!!$errors->first('user','<span class="invalid-feedback">:message</span>')!!}
+                </div>
 
-              <div class="form-group mb-3{{$errors->has('user' ? 'is-invalid' : '')}}">
-                <span class="input-group-addon"><i class="icon-user"></i></span>
-                <input type="text" value="{{old('user')}}" name="user" id="user" class="form-control" placeholder="{{__('auth.placehoderUser')}}">
-                {!!$errors->first('user','<span class="invalid-feedback">:message</span>')!!}
-              </div>
-              <div class="form-group mb-4{{$errors->has('password' ? 'is-invalid' : '')}}">
-                <span class="input-group-addon"><i class="icon-lock"></i></span>
-                <input type="password" name="password" id="password" class="form-control" placeholder="{{__('auth.placehoderPassword')}}">
-                {!!$errors->first('password','<span class="invalid-feedback">:message</span>')!!}
-              </div>
-              <div class="row">
-                <div class="col-12">
-                    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
-                    @if (Session::has('g-recaptcha-response'))
-                        <p class="alert {{ Session::get('alert-class','alert-info') }}">
-                            @lang('auth.'.Session::get('g-recaptcha-response'))
-                        </p>
-                    @endif
-                    <br/>
-                    @if (Session::has('custom-error'))
-                    <p class="alert {{ Session::get('alert-class','alert-info') }}">
-                        @lang(Session::get('custom-error'))
-                    </p>
-                @endif
+                <div class="input-group mb-2 mr-sm-2 {{$errors->has('password' ? 'is-invalid' : '')}}">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="icon-lock"></i></div>
+                  </div>
+                  <input type="password" name="password" id="password" class="form-control" placeholder="{{__('auth.placehoderPassword')}}" required>
+                  {!!$errors->first('password','<span class="invalid-feedback">:message</span>')!!}
                 </div>
-                <div class="col-12">
-                  <button type="submit" class="btn bg-proyectobase text-light px-4 rounded"><i class="fa fa-sign-in fa-2x"></i> {{__('auth.btn-enter')}}</button>
+
+                <div class="row">
+                  <div class="col-12">
+                      <div class="g-recaptcha" style="margin-bottom: -30px" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
+                      @if (Session::has('g-recaptcha-response'))
+                          <p class="alert {{ Session::get('alert-class','alert-info') }}">
+                              @lang('auth.'.Session::get('g-recaptcha-response'))
+                          </p>
+                      @endif
+                      <br/>
+                      @if (Session::has('custom-error'))
+                      <p class="alert {{ Session::get('alert-class','alert-info') }}">
+                          @lang(Session::get('custom-error'))
+                      </p>
+                      @endif
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn text-light px-4 rounded" style="background-color: #00b09b"><i class="fa fa-sign-in"></i> {{__('auth.btn-enter')}}</button>
+                  </div>
                 </div>
-              </div>
+
             </div>
           </form>
           </div>

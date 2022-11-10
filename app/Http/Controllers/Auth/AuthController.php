@@ -70,7 +70,7 @@ class AuthController extends Controller
                 Auth::logout();
                 return redirect("login")->with('custom-error','auth.not_validated_email');
             }
-            return redirect()->intended('panel')->with('success','auth.correct_login');
+            return redirect()->intended('panel');
 
         }
 
@@ -96,7 +96,7 @@ class AuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            return view('dashboard.dashboard');
+            return view('template.contenido');
         }
 
         return redirect("login")->with('custom-error','auth.not_login');

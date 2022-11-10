@@ -1,4 +1,4 @@
-@extends('dashboard.dashboard')
+@extends('template.contenido')
 @section('contenido')
 
    <div class="card">
