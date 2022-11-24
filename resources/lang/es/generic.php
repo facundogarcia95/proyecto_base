@@ -23,7 +23,7 @@ return [
     'rol' => 'Rol',
     'condition' => 'Estado',
     'actions' => 'Acciones',
-    'add' => 'Agregar',
+    'add' => 'Nuevo',
     'edit' => 'Modificar',
     'search' => 'Buscar',
     'change' => 'Cambiar',

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Rol extends Model
 {
@@ -51,6 +52,9 @@ class Rol extends Model
             ->orWhere('description','like','%'.$request->searchText.'%');
         }else{
             $roles = Rol::whereNotNull('name');
+        }
+        if(!Auth::user()->rol->is_super){
+            $roles->where('is_super','=',0);
         }
         return $roles;
     }

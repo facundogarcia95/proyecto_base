@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Mail\NotifyMailPass;
 use App\Mail\NotifyUserAdd;
+use App\Models\Business;
 use App\Models\Rol;
 use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -30,7 +33,8 @@ class UserController extends Controller
          */
         $types_doc = $this::getPossibleEnumValues(app(User::class)->getTable(),'type_doc');
         $roles = Rol::listRoles()->where('condition','=',1)->get();
-        return view('users.index',['types_doc' => $types_doc,'roles' => $roles]);
+        $business = Business::where('condition','=',1)->get();
+        return view('users.index',['types_doc' => $types_doc,'roles' => $roles,'business' => $business]);
     }
 
     /**
@@ -76,11 +80,52 @@ class UserController extends Controller
             ],
         ];
         $data =  User::listUsers($params);
+        $data["data"] = $this::SearchRelation($data['data'],'id_user_owner','id_user_attached','App\Models\User_Attached');
         $data["data"] = $this::CryptsOrDeletesAjaxElements($data["data"],['id']);
         $data['draw']	= (int) $request->draw;
 
         return Response::json($data,200);
 
+    }
+
+    /**
+     * Display a listing json of the User by Business.
+     *
+     * @return Json
+     */
+    public function users_by_business(Request $request){
+
+        $validator = Validator::make(
+            $request->all(),
+            ['id_business' => 'required|exists:business,id'],
+            [
+            'required' => 'El campo :attribute es obligatorio',
+            'exists' => 'La empresa no existe',
+            ]
+        );
+        
+        if($validator->fails()){
+            return Response::json(
+                [
+                    "status" => 302,
+                    "mensajes" => ["validaciones" => $validator->errors()],
+                    "data" => []
+                ],
+                200
+            );
+        }
+
+        $users = User::select('id','name','num_doc')->where('id_business','=',$request->id_business)->where('condition','=',1)->get();
+        
+        return Response::json(
+            [
+                "status" => 200,
+                "mensajes" => ["validaciones" => []],
+                "data" => $users
+            ],
+            200
+        );
+        
     }
 
     /**

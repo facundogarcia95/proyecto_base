@@ -36,17 +36,32 @@
         </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-4">
             <label for="adress">@lang('form.adress')</label>
             <input type="text" class="form-control"  maxlength="70" id="adress" name="adress" placeholder="@lang('form.adress')">
         </div>
         <div class="form-group col-md-4">
-            <label for="idrol">@lang('form.rol')</label>
-            <select name="idrol" id="idrol"  class="form-control" required>
+            <label for="id_business">@lang('form.business')</label>
+            <select name="id_business" id="id_business"  class="form-control" required>
+                <option value="" disabled selected>@lang('form.select')...</option>
+                @foreach($business as $busine)
+                    <option value="{{ $busine->id }}">{{ $busine->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-md-4" style="display: none;" id="select-rol">
+            <label for="id_rol">@lang('form.rol')</label>
+            <select name="id_rol" id="id_rol"  class="form-control" required>
                 <option value="" disabled selected>@lang('form.select')...</option>
                 @foreach($roles as $rol)
                     <option value="{{ $rol->id }}">{{ $rol->name }}</option>
                 @endforeach
+            </select>
+        </div>
+        <div class="form-group col-md-4" style="display: none;" id="user_attached">
+            <label for="id_user_attached">@lang('form.user_attached')</label>
+            <select name="id_user_attached" id="id_user_attached"  class="form-control" required>
+                <option value="" disabled selected>@lang('form.select')...</option>
             </select>
         </div>
     </div>

@@ -20,7 +20,7 @@ class RoutesWithPermission
     public function handle(Request $request, Closure $next)
     {
         list($controller, $action) = explode("@",class_basename($request->route()->getAction()["controller"]));
-        $permission = Permission::where('idrol','=', Auth::user()->idrol)
+        $permission = Permission::where('id_rol','=', Auth::user()->id_rol)
         ->where('controller','=',$controller)
         ->where('action','=',$action)
         ->where('condition','=',1)

@@ -16,4 +16,6 @@ return [
     'is_admin' => 'Es Administrador',
     'add_description' => 'Colocar Descripción',
     'description_permission' => 'Descripción de funcionalidad',
+    'business' => 'Empresa',
+    'user_attached' => 'Usuario Titular',
 ];

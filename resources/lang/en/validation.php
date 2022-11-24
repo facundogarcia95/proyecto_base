@@ -166,7 +166,7 @@ return [
         'num_doc' => 'Doc. Number',
         'adress' => 'Adress',
         'cel_number' => 'Cell Number',
-        'idrol' => 'Rol',
+        'id_rol' => 'Rol',
         'id' => 'ID'
     ],
 

@@ -133,7 +133,7 @@ class RolesController extends Controller
                     if($notExist){
                         $fail('validation.not_in');
                     }
-                    $usersInRol = User::where('idrol','=',Crypt::decryptString($value))->count();
+                    $usersInRol = User::where('id_rol','=',Crypt::decryptString($value))->count();
                     if($usersInRol){
                         $fail('validation.users_in_rol');
                     }

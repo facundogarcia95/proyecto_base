@@ -2,10 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionsTable extends Migration
+class CreateUsersAttachedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,21 +13,15 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('users_attached', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_rol')->unsigned();
-            $table->foreign('id_rol')->references('id')->on('roles');
-            $table->string('controller',100)->nullable(false);
-            $table->string('action',100)->nullable(false);
-            $table->string('name',100)->nullable(false);
-            $table->text('description')->nullable();
+            $table->integer('id_user_owner')->unsigned();
+            $table->foreign('id_user_owner')->references('id')->on('users');
+            $table->integer('id_user_attached')->unsigned();
+            $table->foreign('id_user_attached')->references('id')->on('users');
             $table->integer('condition')->unsigned()->default(1);
             $table->foreign('condition')->references('id')->on('conditions');
         });
-
-
-
     }
 
     /**
@@ -38,6 +31,6 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permisos');
+        Schema::dropIfExists('users_attached');
     }
 }
