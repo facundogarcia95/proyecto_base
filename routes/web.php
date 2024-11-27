@@ -70,7 +70,6 @@ Route::group(['middleware' => ['auth','UserState']], function () {
         //CUANDO ES RESOURCE SE ESCRIBE DE ESTA MANERA LA RUTA
         Route::resource('users', UserController::class,['names' => ['as' => 'prefix']]);
         Route::get('users_ajax', [UserController::class, 'ajax_list'])->name('users_ajax');
-        Route::get('users_by_business', [UserController::class, 'users_by_business'])->name('users_by_business');
 
         Route::resource('roles', RolesController::class,['names' => ['as' => 'prefix']]);
         Route::resource('permissions', PermissionController::class,['names' => ['as' => 'prefix']]);

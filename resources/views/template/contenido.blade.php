@@ -119,7 +119,10 @@
     <script src="{{asset('js/librerias/select2.js')}}"></script>
     <script>
         const RUTA = "{{Request::route()->getName()}}";
-        $('select').select2();
+        $('.modal').on('show.bs.modal', function (event) {
+            var modal = $(this)
+            modal.find('select').select2();
+        });
     </script>
     
  @stack('scripts')

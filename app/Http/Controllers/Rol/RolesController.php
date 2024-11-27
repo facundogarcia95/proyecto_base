@@ -138,10 +138,11 @@ class RolesController extends Controller
                         $fail('validation.users_in_rol');
                     }
                 }],
+                'condition' => ['numeric', 'min:0', 'max:10'],
             ]);
 
             $rol= Rol::findOrFail(Crypt::decryptString($request->id));
-            $rol->condition = ($rol->condition == 1) ? 2 : 1;
+            $rol->condition = $request->condition;
             $rol->save();
             return Redirect::back()->with('success', 'generic.edit_success');
         } catch (DecryptException $th) {

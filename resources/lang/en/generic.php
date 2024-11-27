@@ -49,4 +49,7 @@ return [
     'controller' => 'Controller',
     'action' => 'Action',
     'expand_record' => 'Expand Records',
+    'delete_role' => 'Delete Role',
+    'delete_user' => 'Delete User',
+
 ];

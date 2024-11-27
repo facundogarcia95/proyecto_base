@@ -29,14 +29,12 @@ class CreateUsersTable extends Migration
             $table->foreign('condition')->references('id')->on('conditions');
             $table->integer('id_rol')->unsigned();
             $table->foreign('id_rol')->references('id')->on('roles');
-            $table->integer('id_business')->unsigned();
-            $table->foreign('id_business')->references('id')->on('business');
             $table->rememberToken();
             $table->timestamps();
         });
 
         $user = [
-            ['name' => 'Super Usuario', 'type_doc' => 'DNI', 'num_doc' => '12345567', 'adress' => 'SIN CALLE', 'cel_number' => '2612288191','email' => 'facunditogarcia@gmail.com', 'email_verified_at'=> now(), 'user' => 'super', 'password' => bcrypt('1234'), 'id_rol' => 1, 'id_business' => 1, 'created_at' => now()]
+            ['name' => 'Super Usuario', 'type_doc' => 'DNI', 'num_doc' => '12345567', 'adress' => 'SIN CALLE', 'cel_number' => '2612288191','email' => 'facunditogarcia@gmail.com', 'email_verified_at'=> now(), 'user' => 'super', 'password' => bcrypt('1234'), 'id_rol' => 1, 'created_at' => now()]
         ];
          DB::table('users')->insert($user);
     }

@@ -97,10 +97,11 @@ class User extends Authenticatable
         $params['lenght'] = (!isset($params['lenght']) || empty($params['lenght']) ) ? 10 :$params['lenght'];
         $params['search'] = (!isset($params['search']) || empty($params['search']) ) ? '' :$params['search'];
 
-        $query = User::select('users.*','roles.name as rolname','conditions.name as condition_name')
+        $query = User::select('users.*','roles.name as rolname','roles.is_super','conditions.name as condition_name')
         ->join('roles','users.id_rol','=','roles.id')
         ->join('conditions','users.condition','=','conditions.id')
-        ->where('roles.condition','=',1);
+        ->where('roles.condition','=',1)
+        ->whereIn('users.condition',[1,2]);
 
         $data = ListadoAjax::listAjax($columns, $query, $params);
 

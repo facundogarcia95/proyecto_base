@@ -48,4 +48,6 @@ return [
     'controller' => 'Controlador',
     'action' => 'Acción',
     'expand_record' => 'Expandir',
+    'delete_role' => 'Eliminar Rol',
+    'delete_user' => 'Eliminar Usuario',
 ];

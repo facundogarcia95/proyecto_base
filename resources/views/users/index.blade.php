@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="addUserModal" role="dialog" aria-labelledby="myModalLabel"
     style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dark modal-lg" role="document">
         <div class="modal-content">
@@ -98,6 +98,7 @@
                     {{csrf_field()}}
 
                     <input type="hidden" id="id" name="id" value="">
+                    <input type="hidden" id="condition" name="condition" value="2">
 
                     <p>@lang('generic.messege_confirm')</p>
 
@@ -116,6 +117,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dark" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@lang('generic.delete_user')</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-light">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{route('users.destroy','destroy')}}" method="POST" class="was-validated">
+                    {{method_field('delete')}}
+                    {{csrf_field()}}
+
+                    <input type="hidden" id="id" name="id" value="">
+                    <input type="hidden" id="condition" name="condition" value="">
+
+                    <p>@lang('generic.messege_confirm')</p>
+
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success rounded">@lang('generic.accept')</button>
+                        <button type="button" class="btn btn-danger rounded"
+                            data-dismiss="modal">@lang('generic.cancel')</button>
+                    </div>
+
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
 
 <div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     style="display: none;" aria-hidden="true">
@@ -174,8 +210,7 @@
                 { targets: 1, width: '20%',  className: 'text-left', responsivePriority:3},
                 { targets: 2, width: '15%', className: 'text-left', responsivePriority:4},
                 { targets: 3, width: '15%', className: 'text-left', responsivePriority:5},
-                { targets: 4, width: '15%', className: 'text-left', orderable: false, responsivePriority:6},
-                { targets: 5, width: '15%', orderable: false, responsivePriority:1},
+                { targets: 4, width: '15%', orderable: false, responsivePriority:1},
             ],
             order: [[0, 'asc']],
             responsive:true,
@@ -184,7 +219,16 @@
                     title: '@lang("generic.name")',
                     name: 'user.name',
                     data: 'name',
-                    className: 'text-left'
+                    className: 'text-left',
+                    render: function (data, type, row) {
+                        if(row.condition == 1){
+                            html = `<i class="fa fa-check-circle text-success mr-3" data-toggle="tooltip" data-placement="bottom" title="@lang('generic.condition') ${row.condition_name}"></i>`
+                        }else{
+                            html = `<i class="fa fa-window-close text-danger mr-3" data-toggle="tooltip" data-placement="bottom" title="@lang('generic.condition') ${row.condition_name}"></i>`
+                        }
+                        html += row.name;
+                        return html;
+                    }
                 },
                 {
                     title: '@lang("generic.email")',
@@ -206,37 +250,57 @@
                     className: 'text-left'
                 },
                 {
-                    title: '@lang("generic.condition")',
-                    name: 'conditions.condition_name',
-                    data: 'condition_name',
-                    className: 'text-left',
-                    render: function (data, type, row) {
-                        return data;
-                    }
-                },
-                {
                     title: '@lang("generic.actions")',
                     name: null,
                     data: null,
                     className: 'text-left',
                     render: function (data, type, row) {
 
-                        return `<button type="button" class="btn btn-brown rounded text-light btn-sm"
+                        html = `<button type="button" class="btn btn-brown rounded text-light btn-sm ml-2"
                                     data-id="${row['id']}"
                                     data-name="${row['name']}"
                                     data-type_doc="${row['type_doc']}"
                                     data-num_doc="${row['num_doc']}"
+                                    data-cel_number="${row['cel_number']}"
                                     data-adress="${row['adress']}"
                                     data-email="${row['email']}"
                                     data-id_rol="${row['id_rol']}"
                                     data-user="${row['user']}"
-                                    data-business="${row['id_business']}"
-                                    data-id_user_owner="${row['id_user_owner']}"
                                     data-toggle="modal" data-target="#editUserModal">
                                     <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.edit') @lang('generic.user')">
                                         <i class="fa fa-edit"></i>
                                     </span>
                                 </button>`;
+
+                      if (row.condition == 1 && row.is_super != 1){
+                        html += `<button type="button" class="btn btn-danger rounded btn-sm ml-2"
+                                    data-id="${row['id']}"
+                                    data-condition="2"
+                                    data-toggle="modal" data-target="#changeCondition">
+                                    <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.change') @lang('generic.condition')">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                </button>`;
+                      }else if(row.condition == 2 && row.is_super != 1){
+                        html += `<button type="button" class="btn btn-success rounded btn-sm ml-2"
+                                    data-id="${row['id']}"
+                                    data-condition="1"
+                                    data-toggle="modal" data-target="#changeCondition">
+                                    <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.change') @lang('generic.condition')">
+                                        <i class="fa fa-check"></i>
+                                    </span>
+                                </button>
+                                <button type="button" class="btn btn-danger rounded btn-sm ml-2"
+                                    data-id="${row['id']}"
+                                    data-condition="3"
+                                    data-toggle="modal" data-target="#deleteUser">
+                                    <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.delete_user')">
+                                        <i class="fa fa-trash"></i>
+                                    </span>
+                                </button>`;
+                      }
+
+                      return html;
                     }
                 }
             ]
@@ -257,7 +321,6 @@
             var email = button.data('email')
             var id_rol = button.data('id_rol')
             var user = button.data('user')
-            var id_business = button.data('business')
             var id_user_owner = button.data('id_user_owner')
             var id = button.data('id')
             var modal = $(this)
@@ -269,57 +332,29 @@
             modal.find('.modal-body #cel_number').val(cel_number);
             modal.find('.modal-body #email').val(email);
             modal.find('.modal-body #user').val(user);
-            modal.find('.modal-body #id_business').val(id_business).trigger('change');
-
-            if(id_business){
-                modal.find('.modal-body #select-rol').show();
-            }
             modal.find('.modal-body #id_rol').val(id_rol).trigger('change');
 
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body :input').inputmask();
-
-            modal.find('.modal-body #id_rol').on('change',function (e) { 
-                if($(this).val() >= 3){ //NO ES SUPER NI ESCRIBANO
-                    modal.find('.modal-body #user_attached').show();
-                    modal.find('.modal-body #id_business').trigger('change');
-                }else{
-                    modal.find('.modal-body #user_attached').hide();
-                    modal.find('.modal-body #id_user_attached').val(0).trigger('change');
-                }
-            });
-
-            modal.find('.modal-body #id_business').on('change',function (e) { 
-                $.ajax({
-                    type: "GET",
-                    url: "/users_by_business",
-                    data: {id_business: $(this).val()},
-                    dataType: "json",
-                    success: function (response) {
-                        if(response.status == 200){
-                            modal.find('.modal-body #id_user_attached').empty();
-                            modal.find('.modal-body #id_user_attached').append(`<option value='0'>Seleccione</option>`)
-                            response.data.forEach(element => {
-                                modal.find('.modal-body #id_user_attached').append(`<option value='${element.id}'> ${element.name}</option>`)
-                            });
-                            modal.find('.modal-body #id_user_attached').val(id_user_owner).trigger('change');
-                        }
-                        
-                    }
-                });
-            });
         });
 
-        function listUsersBusiness(id_business){
-           
-            
-        }
 
         $('#changeCondition').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var id = button.data('id');
+            var condition = button.data('condition');
             var modal = $(this);
             modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #condition').val(condition);
+        });
+
+        $('#deleteUser').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var condition = button.data('condition');
+            var modal = $(this);
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #condition').val(condition);
         });
 
         $('#resetPassword').on('show.bs.modal', function (event) {
@@ -329,40 +364,6 @@
             modal.find('.modal-body #id').val(id);
         });
 
-        //Si el rol es adjunto, debo mostrar un desplegable para que seleccione el titular.
-        $("#id_rol").on('change',function (e) { 
-            e.preventDefault();
-            id_rol = $(this).val();
-            alert(id_rol);
-            if(id_rol >= 3){ //NO ES SUPER NI ESCRIBANO
-                $('#user_attached').show();
-                $('#id_user_attached').trigger('change');
-            }else{
-                $('#user_attached').hide();
-                $('#id_user_attached').val(0);
-            }
-        });
-
-        //Si el rol es adjunto, debo mostrar un desplegable para que seleccione el titular.
-        $("#id_business").on('change',function (e) { 
-            $("#select-rol").show()
-            $.ajax({
-                type: "GET",
-                url: "/users_by_business",
-                data: {id_business: $(this).val()},
-                dataType: "json",
-                success: function (response) {
-                    if(response.status == 200){
-                        $('#id_user_attached').empty();
-                        $('#id_user_attached').append(`<option value='0'>Seleccione</option>`)
-                        response.data.forEach(element => {
-                            $('#id_user_attached').append(`<option value='${element.id}'> ${element.name}</option>`)
-                        });
-                        $('#id_user_attached').val(id_user_owner).trigger('change');
-                    }
-                }
-            });
-        });
 
     });
 

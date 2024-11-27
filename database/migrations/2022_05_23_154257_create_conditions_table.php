@@ -23,6 +23,7 @@ class CreateConditionsTable extends Migration
         $conditions = [
             ['name' => 'Active'],
             ['name' => 'Inactive'],
+            ['name' => 'Delete'],
         ];
 
         DB::table('conditions')->insert($conditions);
