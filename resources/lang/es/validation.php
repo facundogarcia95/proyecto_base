@@ -166,7 +166,7 @@ return [
         'num_doc' => 'N° de Documento',
         'adress' => 'Dirección',
         'cel_number' => 'N° de Celular',
-        'idrol' => 'Rol',
+        'id_rol' => 'Rol',
         'id' => 'ID'
     ],
 

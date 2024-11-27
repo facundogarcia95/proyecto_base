@@ -24,7 +24,7 @@
             <ul class="todo-list"  style="overflow-x: hidden;">
                 @foreach ($roles as $rol)
                     @php
-                        $permissions_rol = $permissions->where('idrol','=',$rol->id)->values();
+                        $permissions_rol = $permissions->where('id_rol','=',$rol->id)->values();
                     @endphp
 
                     <li class="itemSlide" id="{{$rol->id}}">
@@ -127,7 +127,7 @@
                                                             data-controller="{{ Crypt::encryptString($route->controller) }}"
                                                             data-action="{{ Crypt::encryptString($route->action) }}"
                                                             data-name="{{ Crypt::encryptString($route->name) }}"
-                                                            data-idrol="{{ Crypt::encryptString($rol->id) }}"
+                                                            data-id_rol="{{ Crypt::encryptString($rol->id) }}"
                                                             data-toggle="modal" data-target="#changeCondition">
                                                             <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.add')">
                                                                 <i class="fa fa-plus-circle"></i>
@@ -175,7 +175,7 @@
                     <input type="hidden" id="controller" name="controller" value="">
                     <input type="hidden" id="action" name="action" value="">
                     <input type="hidden" id="name" name="name" value="">
-                    <input type="hidden" id="idrol" name="idrol" value="">
+                    <input type="hidden" id="id_rol" name="id_rol" value="">
                     <div class="form-row add-description" style="display: none;">
                         <div class="form-group col-md-12">
                             <label for="email">@lang('form.add_description')</label>
@@ -209,7 +209,7 @@
                 var controller = button.data('controller');
                 var action = button.data('action');
                 var name = button.data('name');
-                var idrol = button.data('idrol');
+                var id_rol = button.data('id_rol');
                 var modal = $(this);
                 if(!id){
                     modal.find('.modal-body .add-description').show();
@@ -220,7 +220,7 @@
                 modal.find('.modal-body #controller').val(controller);
                 modal.find('.modal-body #action').val(action);
                 modal.find('.modal-body #name').val(name);
-                modal.find('.modal-body #idrol').val(idrol);
+                modal.find('.modal-body #id_rol').val(id_rol);
 
             });
             $(".btn-collapse").on("click",function(){

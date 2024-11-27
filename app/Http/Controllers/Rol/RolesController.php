@@ -133,15 +133,16 @@ class RolesController extends Controller
                     if($notExist){
                         $fail('validation.not_in');
                     }
-                    $usersInRol = User::where('idrol','=',Crypt::decryptString($value))->count();
+                    $usersInRol = User::where('id_rol','=',Crypt::decryptString($value))->count();
                     if($usersInRol){
                         $fail('validation.users_in_rol');
                     }
                 }],
+                'condition' => ['numeric', 'min:0', 'max:10'],
             ]);
 
             $rol= Rol::findOrFail(Crypt::decryptString($request->id));
-            $rol->condition = ($rol->condition == 1) ? 2 : 1;
+            $rol->condition = $request->condition;
             $rol->save();
             return Redirect::back()->with('success', 'generic.edit_success');
         } catch (DecryptException $th) {

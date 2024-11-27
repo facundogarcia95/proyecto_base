@@ -23,7 +23,7 @@ return [
     'rol' => 'Rol',
     'condition' => 'Estado',
     'actions' => 'Acciones',
-    'add' => 'Agregar',
+    'add' => 'Nuevo',
     'edit' => 'Modificar',
     'search' => 'Buscar',
     'change' => 'Cambiar',
@@ -48,4 +48,6 @@ return [
     'controller' => 'Controlador',
     'action' => 'Acción',
     'expand_record' => 'Expandir',
+    'delete_role' => 'Eliminar Rol',
+    'delete_user' => 'Eliminar Usuario',
 ];

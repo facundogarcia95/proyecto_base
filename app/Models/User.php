@@ -25,7 +25,7 @@ class User extends Authenticatable
         'cel_number',
         'email',
         'user',
-        'idrol',
+        'id_rol',
         'password',
         'condition'
     ];
@@ -48,7 +48,7 @@ class User extends Authenticatable
      */
     public function rol()
 	{
-		return $this->belongsTo(Rol::class, 'idrol');
+		return $this->belongsTo(Rol::class, 'id_rol');
 	}
 
      /**
@@ -97,9 +97,11 @@ class User extends Authenticatable
         $params['lenght'] = (!isset($params['lenght']) || empty($params['lenght']) ) ? 10 :$params['lenght'];
         $params['search'] = (!isset($params['search']) || empty($params['search']) ) ? '' :$params['search'];
 
-        $query = User::select('users.*','roles.name as rolname','conditions.name as condition_name')->join('roles','users.idrol','=','roles.id')
+        $query = User::select('users.*','roles.name as rolname','roles.is_super','conditions.name as condition_name')
+        ->join('roles','users.id_rol','=','roles.id')
         ->join('conditions','users.condition','=','conditions.id')
-        ->where('roles.condition','=',1);
+        ->where('roles.condition','=',1)
+        ->whereIn('users.condition',[1,2]);
 
         $data = ListadoAjax::listAjax($columns, $query, $params);
 

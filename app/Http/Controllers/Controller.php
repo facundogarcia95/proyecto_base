@@ -122,4 +122,22 @@ class Controller extends BaseController
 
         return $data;
     }
+
+    /**
+     * SearchRelation function
+     *
+     * @param array $data
+     * @param array $colum_search Colums to search in table relation
+     * @param array $colum_where Columns to where from table relation
+     * @return array $modelRelation Model use in relation
+     */
+    public static function SearchRelation($data, $colum_search, $colum_where, $modelRelation){
+
+        $data = array_map(function ($data) use ($colum_search,$colum_where,$modelRelation) {
+            $data[$colum_search] = !empty($temp= $modelRelation::where($colum_where,'=',$data['id'])->first()) ? $temp : 0;
+            return $data;
+        },$data);
+
+        return $data;
+    }
 }

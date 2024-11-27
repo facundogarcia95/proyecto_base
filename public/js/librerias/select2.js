@@ -1250,7 +1250,6 @@ S2.define('select2/results',[
     });
 
     container.on('results:focus', function (params) {
-      console.log(params);
       params.element.addClass('select2-results__option--highlighted');
     });
 
@@ -1310,7 +1309,6 @@ S2.define('select2/results',[
 
     this.$results.on('mouseenter', '.select2-results__option[aria-selected]',
       function (evt) {
-        console.log(evt);
       var data = Utils.GetData(this, 'data');
 
       self.getHighlightedResults()

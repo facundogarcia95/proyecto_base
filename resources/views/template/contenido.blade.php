@@ -23,6 +23,7 @@
     <link href="{{asset('css/librerias/estilos.css')}}" rel="stylesheet">
     <link href="{{asset('css/librerias/jquery.dataTables.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/librerias/responsive.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/librerias/select2.css')}}" rel="stylesheet">
 
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
@@ -78,7 +79,7 @@
     <div class="app-body">
 
         @if(Auth::check())
-            @if (Auth::user()->idrol == 1)
+            @if (Auth::user()->id_rol == 1)
                 @include('navbar.sidebaradministrador')
             @endif
 
@@ -96,7 +97,6 @@
     </footer>
 
     <!-- Bootstrap and necessary plugins -->
-    <script>const RUTA = "{{Request::route()->getName()}}";</script>
     <script  src="{{asset('js/librerias/jquery.min.js')}}"></script>
     <script  src="{{asset('js/librerias/jquery-ui.js')}}"></script>
     <script  src="{{asset('js/librerias/jquery-migrate-3.0.0.min.js')}}"></script>
@@ -116,7 +116,15 @@
     <script src="{{asset('js/librerias/inputmask.extensions.js')}}"></script>
     <script src="{{asset('js/librerias/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('js/dashboard.js')}}"></script>
-
+    <script src="{{asset('js/librerias/select2.js')}}"></script>
+    <script>
+        const RUTA = "{{Request::route()->getName()}}";
+        $('.modal').on('show.bs.modal', function (event) {
+            var modal = $(this)
+            modal.find('select').select2();
+        });
+    </script>
+    
  @stack('scripts')
 
 

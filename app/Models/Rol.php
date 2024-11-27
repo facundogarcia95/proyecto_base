@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Rol extends Model
 {
@@ -46,11 +47,19 @@ class Rol extends Model
 
 
      public static function listRoles(Request $request = null){
-        if(!empty($request) && isset($request->searchText)){
-            $roles = Rol::where('name','like','%'.$request->searchText.'%')
-            ->orWhere('description','like','%'.$request->searchText.'%');
-        }else{
+      if (!empty($request) && isset($request->searchText)) {
+            $roles = Rol::where(function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->searchText . '%')
+                      ->orWhere('description', 'like', '%' . $request->searchText . '%');
+            });
+        } else {
             $roles = Rol::whereNotNull('name');
+        }
+        // Filtro adicional: roles con condition en 1 o 2
+        $roles->whereIn('condition', [1, 2]);
+
+        if(!Auth::user()->rol->is_super){
+            $roles->where('is_super','=',0);
         }
         return $roles;
     }

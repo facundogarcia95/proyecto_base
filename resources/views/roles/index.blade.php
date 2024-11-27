@@ -71,7 +71,7 @@
                                             data-id="{{  Crypt::encryptString($rol->id) }}"
                                             data-toggle="modal" data-target="#changeCondition">
                                             <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.change') @lang('generic.condition')">
-                                                <i class="fa fa-trash"></i>
+                                                <i class="fa fa-times"></i>
                                             </span>
                                         </button>
                                     @else
@@ -80,6 +80,13 @@
                                             data-toggle="modal" data-target="#changeCondition">
                                             <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.change') @lang('generic.condition')">
                                                 <i class="fa fa-check"></i>
+                                            </span>
+                                        </button>
+                                        <button type="button" class="btn btn-danger rounded btn-sm"
+                                            data-id="{{  Crypt::encryptString($rol->id) }}"
+                                            data-toggle="modal" data-target="#deleteRole">
+                                            <span data-toggle="tooltip" data-placement="bottom" title=" @lang('generic.delete_role')">
+                                                <i class="fa fa-trash"></i>
                                             </span>
                                         </button>
                                     @endif
@@ -158,6 +165,7 @@
                     {{csrf_field()}}
 
                     <input type="hidden" id="id" name="id" value="">
+                    <input type="hidden" name="condition" value="2">
 
                         <p>@lang('generic.messege_confirm')</p>
 
@@ -169,12 +177,41 @@
 
                     </form>
             </div>
-        <!-- /.modal-content -->
         </div>
-    <!-- /.modal-dialog -->
     </div>
 </div>
 
+<div class="modal fade" id="deleteRole" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dark" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@lang('generic.delete_role')</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-light">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{route('roles.destroy','destroy')}}" method="POST" class="was-validated">
+                    {{method_field('delete')}}
+                    {{csrf_field()}}
+
+                    <input type="hidden" id="id" name="id" value="">
+                    <input type="hidden" name="condition" value="3">
+
+                        <p>@lang('generic.messege_confirm')</p>
+
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success rounded">@lang('generic.accept')</button>
+                        <button type="button" class="btn btn-danger rounded" data-dismiss="modal">@lang('generic.cancel')</button>
+                    </div>
+
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @push('scripts')
 
@@ -214,7 +251,12 @@
                 modal.find('.modal-body #id').val(id);
             });
 
-
+            $('#deleteRole').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var modal = $(this);
+                modal.find('.modal-body #id').val(id);
+            });
 
             //$('input.cb-value').prop("checked", true);
             $('.cb-value').on("click",function() {
