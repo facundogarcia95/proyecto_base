@@ -9,6 +9,7 @@ use App\Models\Rol;
 use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -210,6 +211,37 @@ class UserController extends Controller
       ]);
       $user = User::findOrFail(Crypt::decryptString($request->id));
       $user->update($request->all());
+      return Redirect::back()->with('success', 'generic.edit_success');
+
+    } catch (DecryptException $th) {
+      return Redirect::back()->with('warning', 'generic.edit_error');
+    }
+
+  }
+
+  public function modifyProfile(Request $request)
+  {
+    try {
+
+      $request->validate([
+        'name' => 'required|max:100',
+        'adress' => 'max:70',
+        'cel_number' => 'max:20',
+        'password' => ['nullable', 'min:8', 'same:confirm_password'], // Valida que password sea igual a confirm_password si no es null
+        'confirm_password' => ['nullable'], // Este campo puede ser null
+      ]);
+
+      $user = User::findOrFail(Auth::user()->id);
+
+      // Si hay un password en el request, actualiza el password encriptado
+      if ($request->filled('password')) {
+        $request->merge(['password' => bcrypt($request->password)]);
+      }else{
+        $request->request->remove('password');
+      }
+
+      $user->update($request->except('confirm_password')); // Excluir confirm_password al actualizar
+
       return Redirect::back()->with('success', 'generic.edit_success');
 
     } catch (DecryptException $th) {

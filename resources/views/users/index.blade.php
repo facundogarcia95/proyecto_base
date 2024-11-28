@@ -153,37 +153,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dark" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">@lang('generic.reset_password')</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="text-light">×</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form action="{{route('password_reset')}}" method="POST" class="was-validated">
-                    {{csrf_field()}}
-
-                    <input type="hidden" id="id" name="id" value="">
-                    <p>@lang('generic.messege_confirm')</p>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success rounded">@lang('generic.accept')</button>
-                        <button type="button" class="btn btn-danger rounded"
-                            data-dismiss="modal">@lang('generic.cancel')</button>
-                    </div>
-
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-</div>
 
 @push('scripts')
 <script>
@@ -255,8 +224,9 @@
                     data: null,
                     className: 'text-left',
                     render: function (data, type, row) {
-
-                        html = `<button type="button" class="btn btn-brown rounded text-light btn-sm ml-2"
+                      html = ``;
+                      if (row.is_super != 1){
+                          html += `<button type="button" class="btn btn-brown rounded text-light btn-sm ml-2"
                                     data-id="${row['id']}"
                                     data-name="${row['name']}"
                                     data-type_doc="${row['type_doc']}"
@@ -271,6 +241,7 @@
                                         <i class="fa fa-edit"></i>
                                     </span>
                                 </button>`;
+                      } 
 
                       if (row.condition == 1 && row.is_super != 1){
                         html += `<button type="button" class="btn btn-danger rounded btn-sm ml-2"

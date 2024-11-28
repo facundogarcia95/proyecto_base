@@ -50,4 +50,6 @@ return [
     'expand_record' => 'Expandir',
     'delete_role' => 'Eliminar Rol',
     'delete_user' => 'Eliminar Usuario',
+    'changeProfile' => 'Datos de Perfil',
+    'profile' => 'Perfil'
 ];
