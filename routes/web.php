@@ -69,11 +69,11 @@ Route::group(['middleware' => ['auth','UserState']], function () {
 
         //CUANDO ES RESOURCE SE ESCRIBE DE ESTA MANERA LA RUTA
         Route::resource('users', UserController::class,['names' => ['as' => 'prefix']]);
+        Route::post('users.modifyProfile',[UserController::class,'modifyProfile'])->name('users.modifyProfile');
         Route::get('users_ajax', [UserController::class, 'ajax_list'])->name('users_ajax');
 
         Route::resource('roles', RolesController::class,['names' => ['as' => 'prefix']]);
         Route::resource('permissions', PermissionController::class,['names' => ['as' => 'prefix']]);
-        Route::post('password_reset',[UserController::class,'password_reset'])->name('password_reset');
 
     });
 

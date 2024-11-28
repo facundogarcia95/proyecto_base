@@ -51,5 +51,7 @@ return [
     'expand_record' => 'Expand Records',
     'delete_role' => 'Delete Role',
     'delete_user' => 'Delete User',
+    'changeProfile' => 'Data Profile',
+    'profile' => 'Profile'
 
 ];

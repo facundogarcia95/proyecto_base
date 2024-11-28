@@ -16,4 +16,6 @@ return [
     'is_admin' => 'Es Administrador',
     'add_description' => 'Colocar Descripción',
     'description_permission' => 'Descripción de funcionalidad',
+    'password' => 'Contraseña',
+    'confirm_password' => 'Confirmar Contraseña',
 ];

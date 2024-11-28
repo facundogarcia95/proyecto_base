@@ -29,8 +29,7 @@ class CreateRolesTable extends Migration
         DB::table('roles')->insert(
             [
                 array('id'=>1,'name'=>'Super Usuario','description'=>'Usuario con todos los permisos','is_admin' => 1, 'is_super' => 1,'condition' => 1),
-                array('id'=>2,'name'=>'Escribano','description'=>'Escribano Titular','is_admin' => 1, 'is_super' => 0,'condition' => 1),
-                array('id'=>3,'name'=>'Adjunto','description'=>'Escribano Adjunto','is_admin' => 0, 'is_super' => 0,'condition' => 1),
+                array('id'=>2,'name'=>'Consulta','description'=>'Consulta','is_admin' => 0, 'is_super' => 0,'condition' => 1),
             ]
         );
     }

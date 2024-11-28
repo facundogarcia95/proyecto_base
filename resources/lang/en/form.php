@@ -16,6 +16,6 @@ return [
     'is_admin' => 'Is Admin',
     'add_description' => 'Add Description',
     'description_permission' => 'Functionality Description',
-
-
+    'password' => 'Password',
+    'confirm_password' => 'Confirm Password',
 ];
